@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import {
   GoogleMap,
@@ -20,11 +20,15 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const App = () => {
-  const [value, setValue] = React.useState(0);
-  const [currentLocation, setCurrentLocation] = React.useState({
+  const [isLoading, setIsLoading] = useState(false);
+  const [resData, setResData] = useState(null);
+  const [value, setValue] = useState(0);
+  const [currentLocation, setCurrentLocation] = useState({
     lat: 35.681236,
     lng: 139.767125,
   });
+  const [activeMarker, setActiveMarker] = useState(false);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyD7Tvp_twEILZF9ia8LxblM4J02J1qGv3U",
   });
@@ -36,13 +40,9 @@ const App = () => {
     width: "100%",
   };
 
-  const defaultCenter = {
-    lat: 35.681236,
-    lng: 139.767125,
-  };
-
   // 現在地の取得
   const getCurrentLocation = () => {
+    setIsLoading(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setCurrentLocation({
@@ -50,12 +50,46 @@ const App = () => {
           lng: position.coords.longitude,
         });
         console.log(position.coords);
+        setIsLoading(false);
       },
       (err) => {
         console.log(err);
+        setIsLoading(false);
       }
     );
   };
+
+  const handleActiveMarker = (id) => {
+    console.log(id);
+    setActiveMarker(id);
+  };
+
+  const getMarkerInfo = [
+    {
+      id: 1,
+      name: "テスト1",
+      location: {
+        lat: 35.69731,
+        lng: 139.7747,
+      },
+    },
+    {
+      id: 2,
+      name: "テスト2",
+      location: {
+        lat: 35.69575,
+        lng: 139.77521,
+      },
+    },
+    {
+      id: 3,
+      name: "テスト3",
+      location: {
+        lat: 33.8315492,
+        lng: 132.754934,
+      },
+    },
+  ];
 
   return (
     <>
@@ -65,7 +99,26 @@ const App = () => {
           zoom={14}
           center={currentLocation}
         >
-          <Marker position={currentLocation} />
+          {getMarkerInfo.map((getMarker) => (
+            <>
+              <Marker
+                key={getMarker.id}
+                position={getMarker.location}
+                onClick={() => handleActiveMarker(getMarker.id)}
+              />
+
+              {activeMarker === getMarker.id ? (
+                <InfoWindow
+                  position={getMarker.location}
+                  onCloseClick={() => setActiveMarker(false)}
+                >
+                  <div>
+                    <h1>{getMarker.name}</h1>
+                  </div>
+                </InfoWindow>
+              ) : null}
+            </>
+          ))}
         </GoogleMap>
 
         <div className="btn-wrapper">
