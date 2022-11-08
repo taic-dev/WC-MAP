@@ -19,6 +19,8 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
+import currentLocationIcon from "./logo.svg";
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [resData, setResData] = useState(null);
@@ -67,7 +69,7 @@ const App = () => {
   const getMarkerInfo = [
     {
       id: 1,
-      name: "テスト1",
+      name: "トイレ1",
       location: {
         lat: 35.69731,
         lng: 139.7747,
@@ -75,7 +77,7 @@ const App = () => {
     },
     {
       id: 2,
-      name: "テスト2",
+      name: "トイレ2",
       location: {
         lat: 35.69575,
         lng: 139.77521,
@@ -83,13 +85,15 @@ const App = () => {
     },
     {
       id: 3,
-      name: "テスト3",
+      name: "トイレ3",
       location: {
         lat: 33.8315492,
         lng: 132.754934,
       },
     },
   ];
+
+  const GoogleMapURL = "https://www.google.co.jp/maps?q=";
 
   return (
     <>
@@ -99,6 +103,16 @@ const App = () => {
           zoom={14}
           center={currentLocation}
         >
+          {/* 現在地のマーカー */}
+          <Marker
+            style={{ width: "17px" }}
+            position={currentLocation}
+            icon={{
+              url: "https://maps.google.com/mapfiles/dir_0.png",
+            }}
+          />
+
+          {/* マーカーと吹き出しの表示 */}
           {getMarkerInfo.map((getMarker) => (
             <>
               <Marker
@@ -114,6 +128,7 @@ const App = () => {
                 >
                   <div>
                     <h1>{getMarker.name}</h1>
+                    <a href={GoogleMapURL + `${getMarker.location.lat},${getMarker.location.lng}`}>Google Mapを開く</a>
                   </div>
                 </InfoWindow>
               ) : null}
