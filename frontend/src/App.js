@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./App.css";
 import {
   GoogleMap,
@@ -14,6 +14,8 @@ import {
   IconButton,
 } from "@mui/material";
 
+import getCurrentLocation from "./components/templates/getCurrentLocation.js";
+
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -22,14 +24,29 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import currentLocationIcon from "./logo.svg";
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [resData, setResData] = useState(null);
   const [value, setValue] = useState(0);
   const [currentLocation, setCurrentLocation] = useState({
     lat: 35.681236,
     lng: 139.767125,
   });
+
   const [activeMarker, setActiveMarker] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try{
+        setIsLoading(true);
+        let coordinate = await getCurrentLocation();
+        console.log(coordinate);
+        setCurrentLocation(coordinate);
+      }catch(e){
+        console.log(e);
+      } 
+    })();
+    setIsLoading(false);
+  }, []);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyD7Tvp_twEILZF9ia8LxblM4J02J1qGv3U",
@@ -43,26 +60,11 @@ const App = () => {
   };
 
   // 現在地の取得
-  const getCurrentLocation = () => {
-    setIsLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCurrentLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-        console.log(position.coords);
-        setIsLoading(false);
-      },
-      (err) => {
-        console.log(err);
-        setIsLoading(false);
-      }
-    );
-  };
+  // const getCurrentLocation = () => {
+  //
+  // };
 
   const handleActiveMarker = (id) => {
-    console.log(id);
     setActiveMarker(id);
   };
 
@@ -95,12 +97,16 @@ const App = () => {
 
   const GoogleMapURL = "https://www.google.co.jp/maps?q=";
 
+  console.log(isLoading)
+
+
   return (
     <>
+    {!isLoading ?  (
       <main className="main">
         <GoogleMap
           mapContainerStyle={mapStyles}
-          zoom={14}
+          zoom={17}
           center={currentLocation}
         >
           {/* 現在地のマーカー */}
@@ -128,25 +134,32 @@ const App = () => {
                 >
                   <div>
                     <h1>{getMarker.name}</h1>
-                    <a href={GoogleMapURL + `${getMarker.location.lat},${getMarker.location.lng}`}>Google Mapを開く</a>
+                    <a
+                      href={
+                        GoogleMapURL +
+                        `${getMarker.location.lat},${getMarker.location.lng}`
+                      }
+                    >
+                      Google Mapを開く
+                    </a>
                   </div>
                 </InfoWindow>
               ) : null}
             </>
           ))}
         </GoogleMap>
-
-        <div className="btn-wrapper">
-          <IconButton
-            style={{ width: "80px", height: "80px" }}
-            color="primary"
-            component="label"
-            onClick={getCurrentLocation}
-          >
-            <GpsFixedIcon style={{ width: "40px", height: "40px" }} />
-          </IconButton>
-        </div>
       </main>
+    ) : (<h1>読込中...</h1>)}
+      <div className="btn-wrapper">
+        <IconButton
+          style={{ width: "80px", height: "80px" }}
+          color="primary"
+          component="label"
+          // onClick={getCurrentLocation}
+        >
+          <GpsFixedIcon style={{ width: "40px", height: "40px" }} />
+        </IconButton>
+      </div>
       <footer className="footer">
         <BottomNavigation
           showLabels
