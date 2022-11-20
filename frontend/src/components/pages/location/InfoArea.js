@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Resizable } from "re-resizable";
-import { faDroplet, faToilet } from "@fortawesome/free-solid-svg-icons";
+import { faToiletsPortable,faDroplet, faToilet } from "@fortawesome/free-solid-svg-icons";
 import CurrencyYenIcon from "@mui/icons-material/CurrencyYen";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -66,40 +66,36 @@ const InfoArea = ({ name, review, location, images, detail }) => {
                 </ListItemIcon>
                 <ListItemText primary={detail[0].price} />
               </ListItem>
-            </List>
-            <List>
               <ListItem>
                 <ListItemIcon>
                   <AutoAwesomeIcon />
                 </ListItemIcon>
                 <ListItemText primary={detail[0].clean} />
               </ListItem>
-            </List>
-            <List>
               <ListItem>
                 <ListItemIcon>
                   <AccessTimeIcon />
                 </ListItemIcon>
                 <ListItemText primary={detail[0].time} />
               </ListItem>
-            </List>
-            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <FontAwesomeIcon icon={faToiletsPortable} />
+                </ListItemIcon>
+                <ListItemText primary={`${detail[0].num}室`} />
+              </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <FontAwesomeIcon style={{ width: "20px" }} icon={faToilet} />
                 </ListItemIcon>
                 <ListItemText primary={detail[0].type} />
               </ListItem>
-            </List>
-            <List>
               <ListItem>
                 <ListItemIcon>
                   <FontAwesomeIcon style={{ width: "20px" }} icon={faDroplet} />
                 </ListItemIcon>
                 <ListItemText primary={`ウオシュレット ${detail[0].water}`} />
               </ListItem>
-            </List>
-            <List>
               <ListItem>
                 <ListItemIcon>
                   <BabyChangingStationIcon />
@@ -108,8 +104,6 @@ const InfoArea = ({ name, review, location, images, detail }) => {
                   primary={`おむつ交換台 ${detail[0].babyChangingStation}`}
                 />
               </ListItem>
-            </List>
-            <List>
               <ListItem>
                 <ListItemIcon>
                   <AccessibleIcon />
