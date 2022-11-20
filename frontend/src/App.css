@@ -98,6 +98,7 @@
     object-fit: cover;
 }
 
-.info-area__detail > *{
+.info-area__detail li{
     border-bottom: solid 1px #cfcfcf;
+    padding: 15px;
 }
