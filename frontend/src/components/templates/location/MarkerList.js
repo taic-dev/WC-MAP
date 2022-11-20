@@ -1,3 +1,4 @@
+import { Rating } from "@mui/material";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import React, { useState } from "react";
 import InfoArea from "../../pages/location/InfoArea";
@@ -26,7 +27,7 @@ const MarkerList = ({ setInfoArea }) => {
         },
       ],
       detail: [
-        { 
+        {
           price: "無料",
           clean: "非常に綺麗",
           time: "10:00~22:00",
@@ -36,7 +37,7 @@ const MarkerList = ({ setInfoArea }) => {
           babyChangingStation: "あり",
           multipurpose: "あり",
           desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        }
+        },
       ],
     },
     {
@@ -59,7 +60,7 @@ const MarkerList = ({ setInfoArea }) => {
         },
       ],
       detail: [
-        { 
+        {
           price: "無料",
           clean: "非常に綺麗",
           time: "10:00~22:00",
@@ -69,11 +70,10 @@ const MarkerList = ({ setInfoArea }) => {
           babyChangingStation: "あり",
           multipurpose: "あり",
           desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        }
+        },
       ],
     },
     {
-      price: "無料",
       id: 3,
       name: "トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3",
       review: 3,
@@ -99,7 +99,7 @@ const MarkerList = ({ setInfoArea }) => {
         },
       ],
       detail: [
-        { 
+        {
           price: "無料",
           clean: "非常に綺麗",
           time: "10:00~22:00",
@@ -109,7 +109,46 @@ const MarkerList = ({ setInfoArea }) => {
           babyChangingStation: "あり",
           multipurpose: "あり",
           desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        }
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "スターバックスコーヒー 松山市駅前店",
+      review: 5,
+      location: {
+        lat: 33.8356102,
+        lng: 132.7640894,
+      },
+      images: [
+        {
+          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
+        },
+        {
+          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
+        },
+        {
+          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
+        },
+        {
+          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
+        },
+        {
+          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
+        },
+      ],
+      detail: [
+        {
+          price: "有料",
+          clean: "非常に綺麗",
+          time: "10:00~21:00",
+          num: "1",
+          type: "洋式",
+          water: "あり",
+          babyChangingStation: "なし",
+          multipurpose: "なし",
+          desc: "さすがのスターバックス！！いつも清潔に保たれています。",
+        },
       ],
     },
   ];
@@ -136,16 +175,26 @@ const MarkerList = ({ setInfoArea }) => {
               >
                 <div>
                   <h1>{getMarker.name}</h1>
+                  <div className="info-window__review">
+                    <span>{getMarker.review}</span>
+                    <Rating
+                      name="read-only"
+                      value={getMarker.review}
+                      size="small"
+                      readOnly
+                    />
+                    <span>(21)</span>
+                  </div>
                 </div>
               </InfoWindow>
 
               <InfoArea
-                id={getMarker.id}
                 name={getMarker.name}
                 review={getMarker.review}
                 location={getMarker.location}
                 images={getMarker.images}
                 detail={getMarker.detail}
+                handleActiveMarker={handleActiveMarker}
               />
             </>
           ) : null}
