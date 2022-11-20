@@ -31,7 +31,9 @@
     right: 0;
 
     max-width: 450px;
-    height: 50vh;
+    max-height: 70vh;
+
+    height: auto;
     margin: auto;
 
     background: #fff;
@@ -43,7 +45,20 @@
 }
 
 .info-area__inner{
-    margin: 15px;
+    position: relative;
+    padding: 15px;
+}
+
+.info-area__inner::before{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 40px;
+    height: 5px;
+    background: #cfcfcf; 
+    content: "";
 }
 
 .info-area__title{
