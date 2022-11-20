@@ -30,6 +30,7 @@ const MarkerList = ({ setInfoArea }) => {
           price: "無料",
           clean: "非常に綺麗",
           time: "10:00~22:00",
+          num: "2",
           type: "洋式",
           water: "あり",
           babyChangingStation: "あり",
@@ -62,6 +63,7 @@ const MarkerList = ({ setInfoArea }) => {
           price: "無料",
           clean: "非常に綺麗",
           time: "10:00~22:00",
+          num: "2",
           type: "洋式",
           water: "あり",
           babyChangingStation: "あり",
@@ -73,7 +75,7 @@ const MarkerList = ({ setInfoArea }) => {
     {
       price: "無料",
       id: 3,
-      name: "トイレ3",
+      name: "トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3",
       review: 3,
       location: {
         lat: 33.8315492,
@@ -101,6 +103,7 @@ const MarkerList = ({ setInfoArea }) => {
           price: "無料",
           clean: "非常に綺麗",
           time: "10:00~22:00",
+          num: "2",
           type: "和式",
           water: "あり",
           babyChangingStation: "あり",
