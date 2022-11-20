@@ -10,7 +10,12 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Resizable } from "re-resizable";
-import { faToiletsPortable,faDroplet, faToilet } from "@fortawesome/free-solid-svg-icons";
+import {
+  faToiletsPortable,
+  faDroplet,
+  faToilet,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import CurrencyYenIcon from "@mui/icons-material/CurrencyYen";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -21,7 +26,14 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
 
-const InfoArea = ({ name, review, location, images, detail }) => {
+const InfoArea = ({
+  name,
+  review,
+  location,
+  images,
+  detail,
+  handleActiveMarker
+}) => {
   const [descOpen, setDescOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const GoogleMapURL = "https://www.google.co.jp/maps?q=";
@@ -38,6 +50,12 @@ const InfoArea = ({ name, review, location, images, detail }) => {
         }}
       >
         <div className="info-area__inner">
+            <FontAwesomeIcon 
+              icon={faXmark} 
+              size="lg" 
+              className="info-area__xmark" 
+              onClick={() => handleActiveMarker(false)} 
+            />
           <div className="info-area__title">
             <h1>{name}</h1>
           </div>
