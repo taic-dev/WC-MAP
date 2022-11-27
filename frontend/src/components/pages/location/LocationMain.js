@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
 // components
 import Loading from "./Loading";
 import GoogleMapArea from "./GoogleMapArea";
 import CurrentLocationIcon from "./CurrentLocationIcon";
 import MarkerList from "../../templates/location/MarkerList";
+import Footer from "../common/Footer";
 
 // function
 import getCurrentLocation from "../../templates/common/getCurrentLocation.js";
@@ -29,7 +30,8 @@ const LocationMain = () => {
   }, []);
 
   return (
-    <main className="main">
+    <>
+      <main className="main">
         {!isLoading ? (
           <>
             <GoogleMapArea currentLocation={currentLocation}>
@@ -40,8 +42,10 @@ const LocationMain = () => {
         ) : (
           <Loading />
         )}
-    </main>
-  )
-}
+      </main>
+      <Footer />
+    </>
+  );
+};
 
-export default LocationMain
+export default LocationMain;
