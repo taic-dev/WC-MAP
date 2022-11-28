@@ -7,7 +7,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -23,10 +24,11 @@ const LoginMain = ({ auth, setAuth }) => {
     password: "",
     showPassword: false,
   });
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     email: false,
     password: false,
-    alert: false
+    alert: false,
   });
   const navigate = useNavigate();
   const loginURL = "htttps/localhost:8000/login";
@@ -45,18 +47,22 @@ const LoginMain = ({ auth, setAuth }) => {
   const handleSubmitPostLogin = async (e) => {
     e.preventDefault();
     console.log(values);
+    setLoading(true);
 
     // 情報の受け渡し
-    await axios.post(loginURL, 
-      values
-      ).then((response)=>{
+    await axios
+      .post(loginURL, values)
+      .then((response) => {
         console.log(response);
         navigate("/admin");
+        setLoading(false);
         setAuth(true);
-      }).catch((error)=>{
-        setError({...error, alert: "ログイン失敗"});
-        console.log("送信失敗");
       })
+      .catch((error) => {
+        setLoading(false);
+        setError({ ...error, alert: "ログイン失敗" });
+        console.log("送信失敗");
+      });
   };
 
   return (
@@ -74,7 +80,14 @@ const LoginMain = ({ auth, setAuth }) => {
         }}
         onSubmit={(e) => handleSubmitPostLogin(e)}
       >
-        { error.alert && <Alert severity="error" sx={{position: "absolute", top: "50px", width: "85%"}}>{error.alert}</Alert> }
+        {error.alert && (
+          <Alert
+            severity="error"
+            sx={{ position: "absolute", top: "50px", width: "85%" }}
+          >
+            {error.alert}
+          </Alert>
+        )}
 
         <Typography variant={"h5"} sx={{ mb: "30px" }}>
           Log In
@@ -112,9 +125,15 @@ const LoginMain = ({ auth, setAuth }) => {
             </InputAdornment>
           }
         />
-        <Button variant="contained" type="submit" sx={{ width: "70%" }}>
-          Login
-        </Button>
+        {loading ? (
+          <LoadingButton loading variant="outlined" sx={{ width: "70%" }}>
+            Submit
+          </LoadingButton>
+        ) : (
+          <Button variant="contained" type="submit" sx={{ width: "70%" }}>
+            Login
+          </Button>
+        )}
       </Box>
     </main>
   );
