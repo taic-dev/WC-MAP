@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import { Reset } from "styled-reset";
 
 // react-router-dom
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // components
 import LocationMain from "./components/pages/location/LocationMain";
 import LoginMain from "./components/pages/login/LoginMain";
-
-// reset
-import { Reset } from "styled-reset";
+import AdminMain from "./components/pages/admin/AdminMain";
 
 const App = () => {
+  // cookieで管理する？
+  const [auth, setAuth] = useState(false);
 
   return (
     <>
@@ -19,7 +20,25 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<LocationMain />} />
-          <Route path={"/login"} element={<LoginMain />} />
+          <Route
+            path={"/login"}
+            element={
+              auth ? (
+                <Navigate to="/admin" />
+              ) : (
+                <LoginMain auth={auth} setAuth={setAuth} />
+              )
+            }
+          />
+          <Route
+            path={"/admin"}
+            element={
+              auth ? (<AdminMain />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
