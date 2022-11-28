@@ -12,7 +12,9 @@ import AdminMain from "./components/pages/admin/AdminMain";
 
 const App = () => {
   // cookieで管理する？
-  const [auth, setAuth] = useState(false);
+  const loginInfo = localStorage.getItem('login');
+  console.log(loginInfo);
+  const [auth, setAuth] = useState(loginInfo);
 
   return (
     <>

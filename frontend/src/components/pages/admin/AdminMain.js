@@ -1,11 +1,8 @@
-import React from 'react'
+import React from "react";
 
 const AdminMain = () => {
-  return (
-    <main>
-        管理者ページ
-    </main>
-  )
-}
+  localStorage.setItem("login", JSON.stringify({ auth: true }));
+  return <main>管理者ページ</main>;
+};
 
-export default AdminMain
+export default AdminMain;
