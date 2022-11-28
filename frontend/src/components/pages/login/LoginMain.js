@@ -30,8 +30,9 @@ const LoginMain = ({ auth, setAuth }) => {
     password: false,
     alert: false,
   });
+
   const navigate = useNavigate();
-  const loginURL = "htttps/localhost:8000/login";
+  const loginURL = "https://zipcloud.ibsnet.co.jp/api/search?zipcode=7830060";
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -51,11 +52,12 @@ const LoginMain = ({ auth, setAuth }) => {
 
     // 情報の受け渡し
     await axios
-      .post(loginURL, values)
+      .get(loginURL, values)
       .then((response) => {
         console.log(response);
         navigate("/admin");
         setLoading(false);
+        localStorage.setItem("login", JSON.stringify({ auth: true }));
         setAuth(true);
       })
       .catch((error) => {
