@@ -51,20 +51,18 @@ const LoginMain = ({ auth, setAuth }) => {
     setLoading(true);
 
     // 情報の受け渡し
-    await axios
-      .get(loginURL, values)
-      .then((response) => {
-        console.log(response);
-        navigate("/admin");
-        setLoading(false);
-        localStorage.setItem("login", JSON.stringify({ auth: true }));
-        setAuth(true);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError({ ...error, alert: "ログイン失敗" });
-        console.log("送信失敗");
-      });
+    try {
+      const res = await axios.get(loginURL, values);
+      // resの処理
+      localStorage.setItem("login", JSON.stringify({ auth: true }));
+      setLoading(false);
+      setAuth(true);
+      navigate("/admin");
+    } catch (error) {
+      setLoading(false);
+      setError({ ...error, alert: "ログイン失敗" });
+      console.error("送信失敗");
+    }
   };
 
   return (
