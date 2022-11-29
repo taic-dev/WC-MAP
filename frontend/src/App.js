@@ -11,7 +11,6 @@ import LoginMain from "./components/pages/login/LoginMain";
 import AdminMain from "./components/pages/admin/AdminMain";
 
 const App = () => {
-  // cookieで管理する？
   const loginInfo = localStorage.getItem('login');
   console.log(loginInfo);
   const [auth, setAuth] = useState(loginInfo);
