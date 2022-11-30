@@ -16,6 +16,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const LoginMain = ({ auth, setAuth }) => {
@@ -29,6 +30,15 @@ const LoginMain = ({ auth, setAuth }) => {
     email: false,
     password: false,
     alert: false,
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid,isDirty,errors },
+  } = useForm({
+    mode: "onChange",
+    criteriaMode: "all",
   });
 
   const navigate = useNavigate();
@@ -45,7 +55,8 @@ const LoginMain = ({ auth, setAuth }) => {
     });
   };
 
-  const handleSubmitPostLogin = async (e) => {
+  const handleSubmitPostLogin = async (e,data) => {
+    console.log(data);
     e.preventDefault();
     console.log(values);
     setLoading(true);
@@ -65,6 +76,8 @@ const LoginMain = ({ auth, setAuth }) => {
     }
   };
 
+  console.log(errors.email);
+
   return (
     <main className="main">
       <Box
@@ -78,7 +91,7 @@ const LoginMain = ({ auth, setAuth }) => {
           textAlign: "center",
           justifyContent: "center",
         }}
-        onSubmit={(e) => handleSubmitPostLogin(e)}
+        onSubmit={(e)=>handleSubmit(handleSubmitPostLogin(e))}
       >
         {error.alert && (
           <Alert
@@ -93,13 +106,24 @@ const LoginMain = ({ auth, setAuth }) => {
           Log In
         </Typography>
         <TextField
-          required
           id="standard-required"
           label="メールアドレス"
           variant="standard"
           onChange={handleChange("email")}
           sx={{ width: "70%", marginBottom: "50px" }}
+          {...register("email", {
+            required: {
+              value: true,
+              message: "入力が必須です",
+            },
+            minLength: {
+              value: 8,
+              message: "8文字以上入力してください",
+            },
+          })}
         />
+        {errors.email?.types.required && <div>入力が必須です</div>}
+        {errors.email?.types.minLength && <div>8文字以上入力してください。</div>}
         <InputLabel
           htmlFor="standard-adornment-password"
           sx={{ display: "block", width: "70%", textAlign: "left" }}
@@ -110,10 +134,18 @@ const LoginMain = ({ auth, setAuth }) => {
           id="standard-adornment-password"
           label="パスワード"
           sx={{ width: "70%", marginBottom: "50px" }}
-          required
           type={values.showPassword ? "text" : "password"}
-          value={values.password}
           onChange={handleChange("password")}
+          {...register("password", {
+            required: {
+              value: true,
+              message: "入力が必須です",
+            },
+            minLength: {
+              value: 8,
+              message: "8文字以上入力してください",
+            },
+          })}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -125,12 +157,14 @@ const LoginMain = ({ auth, setAuth }) => {
             </InputAdornment>
           }
         />
+        {errors.password?.types.required && <div>入力が必須です</div>}
+        {errors.password?.types.minLength && <div>8文字以上入力してください。</div>}
         {loading ? (
           <LoadingButton loading variant="outlined" sx={{ width: "70%" }}>
             Submit
           </LoadingButton>
         ) : (
-          <Button variant="contained" type="submit" sx={{ width: "70%" }}>
+          <Button variant="contained" type="submit" sx={{ width: "70%" }} disabled={!isDirty || !isValid}>
             Login
           </Button>
         )}
