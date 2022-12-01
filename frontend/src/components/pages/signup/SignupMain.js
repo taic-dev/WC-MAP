@@ -1,47 +1,35 @@
 import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { validation } from "./validation";
+import validation from "./validation";
 import axios from "axios";
-import {
-  Box,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
 
-const LoginMain = () => {
+const SignupMain = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({ alert: false, });
+  const [error, setError] = useState({ alert: false });
 
   const {
     register,
     handleSubmit,
     formState: { isValid, isDirty, errors },
+    getValues,
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const loginURL = "https://weather.tsukumijima.net/api/forecast/city/400040";
+  const signupURL = "";
 
-  const handleSubmitPostLogin = async (data) => {
+  const handleSubmitPostSignup = async (data) => {
     console.log(data);
     setLoading(true);
-
-    // 情報の受け渡し
     try {
-      const res = await axios.get(loginURL, data);
-      // stateの更新
-      dispatch({ type: "SUCCESS" });
+      const res = await axios.post(signupURL, data);
       setLoading(false);
-      navigate("/admin");
     } catch (e) {
       setLoading(false);
       setError({ alert: "ログイン失敗" });
@@ -62,7 +50,7 @@ const LoginMain = () => {
           textAlign: "center",
           justifyContent: "center",
         }}
-        onSubmit={handleSubmit(handleSubmitPostLogin)}
+        onSubmit={handleSubmit(handleSubmitPostSignup)}
       >
         {error.alert && (
           <Alert
@@ -74,11 +62,12 @@ const LoginMain = () => {
         )}
 
         <Typography variant={"h5"} sx={{ mb: "30px" }}>
-          Log In
+          Sign Up
         </Typography>
         <TextField
           id="standard-required"
           type="email"
+          name="email"
           label="メールアドレス"
           variant="standard"
           sx={{ width: "70%", marginBottom: "50px" }}
@@ -87,11 +76,12 @@ const LoginMain = () => {
             (errors.email?.types.pattern && errors.email.message)
           }
           error={errors.email && true}
-          {...register("email", validation.email)}
+          {...register("email", validation().email)}
         />
         <TextField
           id="standard-required"
           type="password"
+          name="password"
           variant="standard"
           label="パスワード"
           sx={{ width: "70%", marginBottom: "50px" }}
@@ -100,20 +90,34 @@ const LoginMain = () => {
             (errors.password?.types.minLength && errors.password.message)
           }
           error={errors.password && true}
-          {...register("password", validation.password)}
+          {...register("password", validation().password)}
         />
+        <TextField
+          id="standard-required"
+          type="password"
+          name="confirmation"
+          variant="standard"
+          label="パスワード確認"
+          sx={{ width: "70%", marginBottom: "50px" }}
+          helperText={
+            (errors.confirmation?.types.required && errors.confirmation.message) ||
+            (errors.confirmation?.types.validate && errors.confirmation.message)
+          }
+          error={errors.confirmation && true}
+          {...register("confirmation", validation(getValues).confirmation)}
+          />
         {loading ? (
           <LoadingButton loading variant="outlined" sx={{ width: "70%" }}>
             Submit
           </LoadingButton>
-        ) : (
+            ) : (
           <Button
             variant="contained"
             type="submit"
             sx={{ width: "70%" }}
             disabled={!isDirty || !isValid}
           >
-            Login
+            Signup
           </Button>
         )}
       </Box>
@@ -121,4 +125,4 @@ const LoginMain = () => {
   );
 };
 
-export default LoginMain;
+export default SignupMain;

@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 // components
 import LocationMain from "./components/pages/location/LocationMain";
 import LoginMain from "./components/pages/login/LoginMain";
+import SignupMain from "./components/pages/signup/SignupMain";
 import AdminMain from "./components/pages/admin/AdminMain";
 
 const App = () => {
@@ -21,26 +22,14 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<LocationMain />} />
+          <Route path={"/signup"} element={<SignupMain />} />
           <Route
             path={"/login"}
-            element={
-              auth ? (
-                <Navigate to="/admin" />
-              ) : (
-                <>
-                <LoginMain />
-                </>
-              )
-            }
-            />
+            element={ auth ? <Navigate to="/admin" /> : <LoginMain />}
+          />
           <Route
             path={"/admin"}
-            element={
-              auth ? (<AdminMain />
-              ) : (
-                <Navigate to="/login" />
-                )
-            }
+            element={auth ? <AdminMain /> : <Navigate to="/login" />}
           />
         </Routes>
       </BrowserRouter>
