@@ -32,7 +32,7 @@ const SignupMain = () => {
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      setError({ alert: "ログイン失敗" });
+      setError({ alert: "新規登録 失敗" });
       console.error("送信失敗");
     }
   };
