@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import { Reset } from "styled-reset";
+import { useSelector } from "react-redux";
 
 // react-router-dom
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -11,8 +12,8 @@ import LoginMain from "./components/pages/login/LoginMain";
 import AdminMain from "./components/pages/admin/AdminMain";
 
 const App = () => {
-  const loginInfo = localStorage.getItem('login');
-  const [auth, setAuth] = useState(loginInfo);
+  // state取得
+  const auth = useSelector((state) => state.auth);
 
   return (
     <>
@@ -26,17 +27,19 @@ const App = () => {
               auth ? (
                 <Navigate to="/admin" />
               ) : (
-                <LoginMain auth={auth} setAuth={setAuth} />
+                <>
+                <LoginMain />
+                </>
               )
             }
-          />
+            />
           <Route
             path={"/admin"}
             element={
               auth ? (<AdminMain />
               ) : (
                 <Navigate to="/login" />
-              )
+                )
             }
           />
         </Routes>

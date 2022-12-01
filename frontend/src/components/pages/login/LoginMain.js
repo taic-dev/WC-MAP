@@ -12,9 +12,9 @@ import {
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
 
-const LoginMain = ({ auth, setAuth }) => {
-
+const LoginMain = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ alert: false, });
 
@@ -27,6 +27,7 @@ const LoginMain = ({ auth, setAuth }) => {
     criteriaMode: "all",
   });
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const loginURL = "https://weather.tsukumijima.net/api/forecast/city/400040";
 
@@ -37,10 +38,9 @@ const LoginMain = ({ auth, setAuth }) => {
     // 情報の受け渡し
     try {
       const res = await axios.get(loginURL, data);
-      // resの処理
-      localStorage.setItem("login", JSON.stringify({ auth: true }));
+      // stateの更新
+      dispatch({ type: "SUCCESS" });
       setLoading(false);
-      setAuth(true);
       navigate("/admin");
     } catch (error) {
       setLoading(false);
