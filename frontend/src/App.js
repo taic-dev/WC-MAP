@@ -14,7 +14,9 @@ import AdminMain from "./components/pages/admin/AdminMain";
 
 const App = () => {
   // state取得
-  const auth = useSelector((state) => state.auth);
+  const stateAuth = useSelector((state) => state.auth);
+  // ローカルストレージ取得
+  const localStrageAuth = localStorage.getItem("auth");
 
   return (
     <>
@@ -25,11 +27,11 @@ const App = () => {
           <Route path={"/signup"} element={<SignupMain />} />
           <Route
             path={"/login"}
-            element={ auth ? <Navigate to="/admin" /> : <LoginMain />}
+            element={ stateAuth || localStrageAuth ? <Navigate to="/admin" /> : <LoginMain />}
           />
           <Route
             path={"/admin"}
-            element={auth ? <AdminMain /> : <Navigate to="/login" />}
+            element={ stateAuth || localStrageAuth ? <AdminMain /> : <Navigate to="/login" />}
           />
         </Routes>
       </BrowserRouter>
