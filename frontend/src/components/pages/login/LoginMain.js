@@ -40,6 +40,7 @@ const LoginMain = () => {
       const res = await axios.get(loginURL, data);
       // stateの更新
       dispatch({ type: "SUCCESS" });
+      localStorage.setItem("auth", true);
       setLoading(false);
       navigate("/admin");
     } catch (e) {
