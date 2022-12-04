@@ -8,7 +8,7 @@
 .footer{
     position: fixed;
     bottom: 0;
-
+    z-index: 2;
     width: 100%;
 }
 
@@ -150,17 +150,17 @@
     padding: 15px;
 }
 
-/* auth */
-.auth__header{
+/* admin */
+.admin__header{
     background-image: url(../public/img/page/admin-page.png);
 }
 
-.auth__main{
+.admin__main{
     position: relative;
     height: calc(100vh - 56px - 15vh);
 }
 
-.auth__main p{
-    margin: 30px 0;
-    text-align: right;
+/* post */
+.post__main{
+    height: auto;
 }

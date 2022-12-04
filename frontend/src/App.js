@@ -11,6 +11,7 @@ import LocationMain from "./components/pages/location/LocationMain";
 import LoginMain from "./components/pages/login/LoginMain";
 import SignupMain from "./components/pages/signup/SignupMain";
 import AdminMain from "./components/pages/admin/AdminMain";
+import PostMain from "./components/pages/post/PostMain";
 
 const App = () => {
   // state取得
@@ -32,6 +33,10 @@ const App = () => {
           <Route
             path={"/admin"}
             element={ stateAuth || localStrageAuth ? <AdminMain /> : <Navigate to="/login" />}
+          />
+          <Route
+            path={"/post"}
+            element={ stateAuth || localStrageAuth ? <PostMain /> : <Navigate to="/login" />}
           />
         </Routes>
       </BrowserRouter>
