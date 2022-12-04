@@ -28,19 +28,27 @@
     top: 0;
     left: 0;
     right: 0;
+
     max-width: 450px;
     margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 15vh;
-    background: red;
+    background-size: cover;
+    background-position: center;
 }
 
 .common__header h1{
     font-size: clamp(20px, 3.3vw, 25px);
     font-weight: bold;
     color: #fff;
+}
+
+.common__filter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: rgba(0,0,0,0.6);
+    height: 15vh;
 }
 
 /* info-window */
@@ -144,7 +152,7 @@
 
 /* auth */
 .auth__header{
-    /* position: absolute; */
+    background-image: url(../public/img/page/admin-page.png);
 }
 
 .auth__main{
