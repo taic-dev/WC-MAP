@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
   BottomNavigation,
   BottomNavigationAction,
-  Box,
-  IconButton,
 } from "@mui/material";
 
 import RestoreIcon from "@mui/icons-material/Restore";
