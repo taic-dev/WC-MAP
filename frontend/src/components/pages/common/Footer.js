@@ -1,12 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import HomeIcon from "@mui/icons-material/Home";
-import LogoutIcon from "@mui/icons-material/Logout";
-import PostAddIcon from "@mui/icons-material/PostAdd";
 
 const Footer = () => {
   const [value, setValue] = useState(0);
@@ -21,9 +19,9 @@ const Footer = () => {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} component={Link} to="/" />
+        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} component={Link} to="/" />
+        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} component={Link} to="/login" />
       </BottomNavigation>
     </footer>
   );

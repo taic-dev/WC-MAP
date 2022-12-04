@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home";
@@ -16,9 +17,9 @@ const AdminFooter = () => {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Post" icon={<PostAddIcon />} />
-        <BottomNavigationAction label="Log Out" icon={<LogoutIcon />} />
+        <BottomNavigationAction label="Home" icon={<HomeIcon />} component={Link} to="/admin" />
+        <BottomNavigationAction label="Post" icon={<PostAddIcon />} component={Link} to="/post" />
+        <BottomNavigationAction label="Log Out" icon={<LogoutIcon />} component={Link} to="/logout" />
       </BottomNavigation>
     </footer>
   );
