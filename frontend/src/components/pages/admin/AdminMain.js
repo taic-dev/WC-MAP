@@ -24,14 +24,13 @@ const AdminMain = () => {
     <>
       <Header page="auth">ホーム</Header>
       <main className="main auth__main">
-        <List sx={{ padding: "100px 0" }}>
+        <List sx={{ padding: "8vh 0" }}>
           <ListItem>
             <ListItemAvatar>
               <Avatar></Avatar>
             </ListItemAvatar>
             <ListItemText primary="ようこそ! 〇〇さん" />
           </ListItem>
-          <Divider variant="inset" component="li" />
         </List>
         <List>
           <Divider variant="inset" component="li" />
