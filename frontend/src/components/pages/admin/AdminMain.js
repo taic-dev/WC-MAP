@@ -10,18 +10,19 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faToilet } from "@fortawesome/free-solid-svg-icons";
 import WcIcon from '@mui/icons-material/Wc';
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Footer from "../common/Footer";
-import Header from "../common/Header";
 
 // components
+import Header from "../common/Header";
+import AdminFooter from "../common/AdminFooter";
 
 const AdminMain = () => {
   const auth = useSelector((state) => state.auth);
+
   return (
     <>
-      <Header page="auth">管理ページ</Header>
+      <Header page="auth">ホーム</Header>
       <main className="main auth__main">
         <List sx={{ padding: "100px 0" }}>
           <ListItem>
@@ -70,7 +71,7 @@ const AdminMain = () => {
           <Divider variant="inset" component="li" />
         </List>
       </main>
-      <Footer></Footer>
+      <AdminFooter />
     </>
   );
 };
