@@ -35,14 +35,18 @@ const MultipleImageUpload = () => {
   return (
     <>
       <div className="post__images">
-        {images.map((image) => {
+        { images.length > 0 ? (images.map((image) => {
           return (
             <div key={image.id} className="post__image">
               <CancelIcon onClick={() => handleOnRemoveImage(image.id)} />
               <img src={image.src} alt="アップロード画像" />
             </div>
           );
-        })}
+        })) : (
+          <div className="post__image--unset">
+            <img src={`${process.env.PUBLIC_URL}/img/page/no-image.png`} alt="画像なし" />
+          </div>
+        )}
       </div>
       <label
         htmlFor={inputId}
