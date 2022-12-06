@@ -10,13 +10,13 @@ import {
   TextField,
 } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
-import MyLocationIcon from "@mui/icons-material/MyLocation";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import AdminFooter from "../common/AdminFooter";
 import Header from "../common/Header";
-import MultipleImageUpload from "./MultipleImageUpload";
+import MultipleImageUploadArea from "./MultipleImageUploadArea";
+import CurrentLocationArea from "./CurrentLocationArea";
 
 function PostMain() {
   const [loading, setLoading] = useState(false);
@@ -58,41 +58,8 @@ function PostMain() {
             error={errors.password && true}
             // {...register("password", validation.password)}
           />
-          <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-            <FormLabel id="demo-radio-buttons-group-label">
-              トイレの位置
-            </FormLabel>
-            <div style={{ display: "flex" }}>
-              <TextField
-                id="standard-required"
-                type="text"
-                variant="standard"
-                label="緯度"
-                InputProps={{
-                  readOnly: true,
-                }}
-                disabled
-              />
-              <TextField
-                id="standard-required"
-                type="text"
-                variant="standard"
-                label="経度"
-                InputProps={{
-                  readOnly: true,
-                }}
-                disabled
-              />
-            </div>
-            <Button
-              variant="contained"
-              endIcon={<MyLocationIcon />}
-              style={{ marginTop: "25px" }}
-            >
-              現在地を取得
-            </Button>
-          </FormControl>
-          <MultipleImageUpload />
+          <CurrentLocationArea />
+          <MultipleImageUploadArea />
           <TextField
             id="standard-select-currency"
             label="料金"
