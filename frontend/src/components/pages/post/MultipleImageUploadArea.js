@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import { createUuid } from "../../templates/common/createUuid";
 import CancelIcon from "@mui/icons-material/Cancel";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 const MultipleImageUpload = () => {
   const [images, setImages] = useState([]);
@@ -13,7 +14,6 @@ const MultipleImageUpload = () => {
     if (!e.target.files) return;
     const files = e.target.files;
     const Base64 = await getBase64(files[files.length - 1]);
-    console.log(Base64);
     setImages([...images, { id: UUID, src: Base64 }]);
   };
 
@@ -31,8 +31,6 @@ const MultipleImageUpload = () => {
     console.log(id);
     setImages(images.filter((img) => img.id !== id));
   };
-
-  console.log(images);
 
   return (
     <>
@@ -62,6 +60,7 @@ const MultipleImageUpload = () => {
           disabled={images.length >= maxImagesUpload && true}
           component="span"
           sx={{ width: "100%" }}
+          endIcon={<AddPhotoAlternateIcon />}
         >
           画像追加
         </Button>
