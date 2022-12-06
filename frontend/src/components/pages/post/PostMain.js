@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import AdminFooter from "../common/AdminFooter";
 import Header from "../common/Header";
+import MultipleImageUpload from "./MultipleImageUpload";
 
 function PostMain() {
   const [loading, setLoading] = useState(false);
@@ -91,6 +92,7 @@ function PostMain() {
               現在地を取得
             </Button>
           </FormControl>
+          <MultipleImageUpload />
           <TextField
             id="standard-select-currency"
             label="料金"
