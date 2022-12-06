@@ -164,3 +164,24 @@
 .post__main{
     height: auto;
 }
+
+.post__images{
+    width: 70%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: scroll;
+    margin-bottom: 25px;
+}
+
+.post__image{
+    display: flex;
+    flex-direction: column;
+}
+
+.post__image img{
+    width: 250px;
+    height: 200px;
+    object-fit: contain;
+}
