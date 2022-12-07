@@ -32,7 +32,7 @@ function PostMain() {
 
   return (
     <>
-      <Header>投稿ページ</Header>
+      <Header page="post">投稿ページ</Header>
       <main className="main post__main">
         <Box
           component="form"

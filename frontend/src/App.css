@@ -161,6 +161,10 @@
 }
 
 /* post */
+.post__header{
+    background-image: url(../public/img/page/post-page.png);
+}
+
 .post__main{
     height: auto;
 }
