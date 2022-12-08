@@ -24,11 +24,18 @@ function PostMain() {
 
   const {
     register,
+    handleSubmit,
     formState: { isValid, isDirty, errors },
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
+
+  const handleSubmitPostPage = async (data) => {
+    console.log(data);
+  };
+
+  console.log(errors);
 
   return (
     <>
@@ -44,19 +51,20 @@ function PostMain() {
             alignItems: "center",
             margin: "50px 0",
           }}
+          onSubmit={handleSubmit(handleSubmitPostPage)}
         >
           <TextField
             id="standard-required"
             type="text"
             variant="standard"
-            label="トイレの場所"
+            label="トイレの名前"
             sx={{ width: "70%", marginBottom: "50px" }}
             helperText={
               (errors.password?.types.required && errors.password.message) ||
               (errors.password?.types.minLength && errors.password.message)
             }
             error={errors.password && true}
-            // {...register("password", validation.password)}
+            {...register("name")}
           />
           <CurrentLocationArea />
           <MultipleImageUploadArea />
@@ -66,6 +74,7 @@ function PostMain() {
             variant="standard"
             style={{ width: "70%", marginBottom: "50px" }}
             select
+            {...register("price")}
           >
             <MenuItem key="" value="無料">
               無料
@@ -80,6 +89,7 @@ function PostMain() {
             variant="standard"
             style={{ width: "70%", marginBottom: "50px" }}
             select
+            {...register("clean")}
           >
             <MenuItem key="" value="excellent">
               非常に綺麗
@@ -100,6 +110,7 @@ function PostMain() {
             variant="standard"
             style={{ width: "70%", marginBottom: "50px" }}
             select
+            {...register("privateRoomNum")}
           >
             <MenuItem key="" value="1">
               1
@@ -121,71 +132,109 @@ function PostMain() {
             </MenuItem>
           </TextField>
           <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-            <FormLabel id="demo-radio-buttons-group-label">
-              個室タイプ
-            </FormLabel>
+            <FormLabel id="private-room-type-group-label">個室タイプ</FormLabel>
             <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
+              aria-labelledby="private-room-type-group-label"
               defaultValue="sum"
-              name="radio-buttons-group"
+              name="private-room-type"
               row
             >
-              <FormControlLabel value="sum" control={<Radio />} label="和式" />
+              <FormControlLabel
+                value="sum"
+                control={<Radio />}
+                label="和式"
+                {...register("privateRoomType")}
+              />
               <FormControlLabel
                 value="western"
                 control={<Radio />}
                 label="洋式"
+                {...register("privateRoomType")}
               />
             </RadioGroup>
           </FormControl>
           <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-            <FormLabel id="demo-radio-buttons-group-label">
-              ウォシュレット
-            </FormLabel>
+            <FormLabel id="washlet-group-label">ウォシュレット</FormLabel>
             <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
+              aria-labelledby="washlet-group-label"
               defaultValue="yes"
-              name="radio-buttons-group"
+              name="washlet"
               row
             >
-              <FormControlLabel value="" control={<Radio />} label="あり" />
-              <FormControlLabel value="no" control={<Radio />} label="なし" />
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="あり"
+                {...register("washlet")}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="なし"
+                {...register("washlet")}
+              />
             </RadioGroup>
           </FormControl>
           <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-            <FormLabel id="demo-radio-buttons-group-label">
+            <FormLabel id="diaper-exchange-table-group-label">
               おむつ交換台
             </FormLabel>
             <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
+              aria-labelledby="diaper-exchange-table-group-label"
               defaultValue="yes"
-              name="radio-buttons-group"
+              name="diaper-exchange-table"
               row
             >
-              <FormControlLabel value="" control={<Radio />} label="あり" />
-              <FormControlLabel value="no" control={<Radio />} label="なし" />
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="あり"
+                {...register("diaperExchangeTable")}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="なし"
+                {...register("diaperExchangeTable")}
+              />
             </RadioGroup>
           </FormControl>
           <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-            <FormLabel id="demo-radio-buttons-group-label">多目的室</FormLabel>
+            <FormLabel id="multi-purpose-room-group-label">多目的室</FormLabel>
             <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
+              aria-labelledby="multi-purpose-room-group-label"
               defaultValue="yes"
-              name="radio-buttons-group"
+              name="multi-purpose-room"
               row
             >
-              <FormControlLabel value="" control={<Radio />} label="あり" />
-              <FormControlLabel value="no" control={<Radio />} label="なし" />
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="あり"
+                {...register("multiPurposeRoom")}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="なし"
+                {...register("multiPurposeRoom")}
+              />
             </RadioGroup>
           </FormControl>
           <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-            <FormLabel id="demo-radio-buttons-group-label">説明</FormLabel>
-            <Textarea minRows={2} style={{ width: "100%" }} />
+            <FormLabel id="description-group-label">説明</FormLabel>
+            <Textarea
+              minRows={2}
+              style={{ width: "100%" }}
+              {...register("description")}
+            />
           </FormControl>
           <Button
             variant="contained"
+            type="submit"
             endIcon={<SendIcon />}
             style={{ marginBottom: "50px" }}
+            // disabled={!isDirty || !isValid}
           >
             確認画面へ
           </Button>
