@@ -4,7 +4,7 @@ import MyLocationIcon from "@mui/icons-material/MyLocation";
 import getCurrentLocation from "../../templates/common/getCurrentLocation";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-const CurrentLocationArea = () => {
+const CurrentLocationArea = ({ register, getValues }) => {
   const [loading, setLoading] = useState(false);
   const [currentLocation, setCurrentLocation] = useState({ lat: "", lng: "" });
 
@@ -13,16 +13,16 @@ const CurrentLocationArea = () => {
     const currentLocationObj = await getCurrentLocation();
     setCurrentLocation(currentLocationObj);
     setLoading(false);
+    setTimeout(()=>{document.getElementById("lat").focus();},1)
+    setTimeout(()=>{document.getElementById("lng").focus();},1)
   };
-
-  console.log(currentLocation);
 
   return (
     <FormControl style={{ width: "70%", marginBottom: "50px" }}>
       <FormLabel id="demo-radio-buttons-group-label">トイレの位置</FormLabel>
       <div style={{ display: "flex" }}>
         <TextField
-          id="standard-required"
+          id="lat"
           type="text"
           variant="standard"
           label="緯度"
@@ -30,9 +30,10 @@ const CurrentLocationArea = () => {
           InputProps={{
             readOnly: true,
           }}
+          {...register("lat",{required: true})}
         />
         <TextField
-          id="standard-required"
+          id="lng"
           type="text"
           variant="standard"
           label="経度"
@@ -40,6 +41,7 @@ const CurrentLocationArea = () => {
           InputProps={{
             readOnly: true,
           }}
+          {...register("lng",{required: true})}
         />
       </div>
       {loading ? (
