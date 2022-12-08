@@ -21,10 +21,12 @@ import CurrentLocationArea from "./CurrentLocationArea";
 function PostMain() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ alert: false });
+  const [images, setImages] = useState([]);
 
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { isValid, isDirty, errors },
   } = useForm({
     mode: "onChange",
@@ -32,6 +34,7 @@ function PostMain() {
   });
 
   const handleSubmitPostPage = async (data) => {
+    data.imageBase64 = images;
     console.log(data);
   };
 
@@ -66,8 +69,8 @@ function PostMain() {
             error={errors.password && true}
             {...register("name")}
           />
-          <CurrentLocationArea />
-          <MultipleImageUploadArea />
+          <CurrentLocationArea register={register} />
+          <MultipleImageUploadArea register={register} images={images} setImages={setImages} />
           <TextField
             id="standard-select-currency"
             label="料金"

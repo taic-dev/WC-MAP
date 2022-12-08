@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, TextField } from "@mui/material";
 import { createUuid } from "../../templates/common/createUuid";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
-const MultipleImageUpload = () => {
-  const [images, setImages] = useState([]);
+const MultipleImageUpload = ({ register, images, setImages }) => {
   const maxImagesUpload = 4;
   const inputId = Math.random().toString(32).substring(2);
   let UUID = createUuid();
@@ -74,7 +73,12 @@ const MultipleImageUpload = () => {
           accept="image/*,.png,.jpg,.jpeg"
           style={{ display: "none" }}
           multiple
-          onChange={(e) => handleOnAddImage(e)}
+          {...register("images")}
+          onChange={(e) => {
+            register("images").onChange(e)
+            handleOnAddImage(e)
+          }
+          }
         />
       </label>
     </>
