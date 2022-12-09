@@ -17,6 +17,7 @@ import AdminFooter from "../common/AdminFooter";
 import Header from "../common/Header";
 import MultipleImageUploadArea from "./MultipleImageUploadArea";
 import CurrentLocationArea from "./CurrentLocationArea";
+import validation from "./validation";
 
 function PostMain() {
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,6 @@ function PostMain() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { isValid, isDirty, errors },
   } = useForm({
     mode: "onChange",
@@ -63,21 +63,24 @@ function PostMain() {
             label="トイレの名前"
             sx={{ width: "70%", marginBottom: "50px" }}
             helperText={
-              (errors.password?.types.required && errors.password.message) ||
-              (errors.password?.types.minLength && errors.password.message)
+              (errors.name?.types.required && errors.name.message) ||
+              (errors.name?.types.minLength && errors.name.message) ||
+              (errors.name?.types.maxLength && errors.name.message) 
             }
-            error={errors.password && true}
-            {...register("name")}
+            error={errors.name && true}
+            {...register("name",validation().name)}
           />
-          <CurrentLocationArea register={register} />
-          <MultipleImageUploadArea register={register} images={images} setImages={setImages} />
+          <CurrentLocationArea register={register} errors={errors} />
+          <MultipleImageUploadArea register={register}  errors={errors} images={images} setImages={setImages} />
           <TextField
             id="standard-select-currency"
             label="料金"
             variant="standard"
-            style={{ width: "70%", marginBottom: "50px" }}
+            sx={{ width: "70%", marginBottom: "50px" }}
             select
-            {...register("price")}
+            helperText={errors.price?.types.required && errors.price.message}
+            error={errors.price && true}
+            {...register("price",validation().price)}
           >
             <MenuItem key="" value="無料">
               無料
@@ -92,7 +95,9 @@ function PostMain() {
             variant="standard"
             style={{ width: "70%", marginBottom: "50px" }}
             select
-            {...register("clean")}
+            helperText={errors.clean?.types.required && errors.clean.message}
+            error={errors.clean && true}
+            {...register("clean",validation().clean)}
           >
             <MenuItem key="" value="excellent">
               非常に綺麗
@@ -113,7 +118,9 @@ function PostMain() {
             variant="standard"
             style={{ width: "70%", marginBottom: "50px" }}
             select
-            {...register("privateRoomNum")}
+            helperText={errors.privateRoomNum?.types.required && errors.privateRoomNum.message}
+            error={errors.privateRoomNum && true}
+            {...register("privateRoomNum",validation().privateRoomNum)}
           >
             <MenuItem key="" value="1">
               1
@@ -224,14 +231,22 @@ function PostMain() {
               />
             </RadioGroup>
           </FormControl>
-          <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-            <FormLabel id="description-group-label">説明</FormLabel>
-            <Textarea
-              minRows={2}
-              style={{ width: "100%" }}
-              {...register("description")}
-            />
-          </FormControl>
+          <TextField
+            id="standard-required"
+            type="text"
+            variant="standard"
+            label="説明"
+            rows={10}
+            sx={{ width: "70%", marginBottom: "50px" }}
+            multiline
+            helperText={
+              (errors.description?.types.required && errors.description.message) ||
+              (errors.description?.types.minLength && errors.description.message) ||
+              (errors.description?.types.maxLength && errors.description.message) 
+            }
+            error={errors.description && true}
+            {...register("description",validation().description)}
+          />
           <Button
             variant="contained"
             type="submit"

@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import getCurrentLocation from "../../templates/common/getCurrentLocation";
 import LoadingButton from "@mui/lab/LoadingButton";
+import validation from "./validation";
 
-const CurrentLocationArea = ({ register, getValues }) => {
+const CurrentLocationArea = ({ register, errors}) => {
   const [loading, setLoading] = useState(false);
   const [currentLocation, setCurrentLocation] = useState({ lat: "", lng: "" });
 
@@ -30,7 +31,9 @@ const CurrentLocationArea = ({ register, getValues }) => {
           InputProps={{
             readOnly: true,
           }}
-          {...register("lat",{required: true})}
+          helperText={errors.lat?.types.required && errors.lat.message}
+          error={errors.lat && true}
+          {...register("lat",validation().lat)}
         />
         <TextField
           id="lng"
@@ -41,7 +44,9 @@ const CurrentLocationArea = ({ register, getValues }) => {
           InputProps={{
             readOnly: true,
           }}
-          {...register("lng",{required: true})}
+          helperText={errors.lng?.types.required && errors.lng.message}
+          error={errors.lng && true}
+          {...register("lng",validation().lng)}
         />
       </div>
       {loading ? (
