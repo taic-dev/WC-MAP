@@ -252,7 +252,7 @@ function PostMain() {
             type="submit"
             endIcon={<SendIcon />}
             style={{ marginBottom: "50px" }}
-            // disabled={!isDirty || !isValid}
+            disabled={!isDirty || !isValid}
           >
             確認画面へ
           </Button>
