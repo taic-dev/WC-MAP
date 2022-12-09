@@ -22,8 +22,8 @@ const AdminMain = () => {
 
   return (
     <>
-      <Header page="auth">ホーム</Header>
-      <main className="main auth__main">
+      <Header page="admin">ホーム</Header>
+      <main className="main admin__main">
         <List sx={{ padding: "8vh 0" }}>
           <ListItem>
             <ListItemAvatar>

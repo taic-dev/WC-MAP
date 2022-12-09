@@ -12,6 +12,8 @@ const SignupMain = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ alert: false });
 
+  console.log(validation());
+
   const {
     register,
     handleSubmit,
