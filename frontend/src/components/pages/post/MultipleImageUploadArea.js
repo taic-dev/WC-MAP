@@ -11,6 +11,12 @@ const MultipleImageUpload = ({ register, errors, images, setImages }) => {
 
   const handleOnAddImage = async (e) => {
     if (!e.target.files) return;
+    console.log(e.target.files);
+    // 10MB以上だったら 
+    if (e.target.files[0].size >= 10485760){
+      alert("10MB以下の画像を選択してください");
+      return;
+    }
     const files = e.target.files;
     const Base64 = await getBase64(files[files.length - 1]);
     setImages([...images, { id: UUID, src: Base64 }]);
@@ -54,9 +60,7 @@ const MultipleImageUpload = ({ register, errors, images, setImages }) => {
           marginBottom: "50px", 
           width: "70%", 
           pointerEvents: images.length >= maxImagesUpload ? "none" : "auto",
-          
         }}
-
       >
         <Button
           variant="contained"
@@ -64,6 +68,7 @@ const MultipleImageUpload = ({ register, errors, images, setImages }) => {
           component="span"
           sx={{ width: "100%" }}
           endIcon={<AddPhotoAlternateIcon />}
+          helper
         >
           画像追加
         </Button>
@@ -80,6 +85,7 @@ const MultipleImageUpload = ({ register, errors, images, setImages }) => {
           }
           }
         />
+        <p style={{ fontSize: "13px", marginTop: "15px" }}>※10MB以下の画像を選択してください。</p>
       </label>
     </>
   );
