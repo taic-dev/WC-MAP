@@ -4,7 +4,7 @@ import { createUuid } from "../../templates/common/createUuid";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
-const MultipleImageUpload = ({ register, images, setImages }) => {
+const MultipleImageUpload = ({ register, errors, images, setImages }) => {
   const maxImagesUpload = 4;
   const inputId = Math.random().toString(32).substring(2);
   let UUID = createUuid();
