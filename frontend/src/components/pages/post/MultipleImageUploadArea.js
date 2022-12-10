@@ -6,9 +6,8 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const ErrorSwal = withReactContent(Swal);
-
 const MultipleImageUpload = ({ register, images, setImages }) => {
+  const ErrorSwal = withReactContent(Swal);
   const maxImagesUpload = 4;
   const inputId = Math.random().toString(32).substring(2);
   let UUID = createUuid();
