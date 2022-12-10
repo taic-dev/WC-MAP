@@ -12,6 +12,7 @@ import LoginMain from "./components/pages/login/LoginMain";
 import SignupMain from "./components/pages/signup/SignupMain";
 import AdminMain from "./components/pages/admin/AdminMain";
 import PostMain from "./components/pages/post/PostMain";
+import ArchiveMain from "./components/pages/archive/ArchiveMain";
 import { localStorageObj } from "./components/templates/common/localStrage";
 
 const App = () => {
@@ -19,7 +20,6 @@ const App = () => {
   const stateAuth = useSelector((state) => state.auth);
   // ローカルストレージ取得
   const localStrageAuth = localStorageObj.getLocalStorage();
-  console.log(localStrageAuth);
 
   return (
     <>
@@ -39,6 +39,10 @@ const App = () => {
           <Route
             path={"/post"}
             element={ stateAuth || localStrageAuth ? <PostMain /> : <Navigate to="/login" />}
+          />
+          <Route
+            path={"/archive"}
+            element={ stateAuth || localStrageAuth ? <ArchiveMain /> : <Navigate to="/login" />}
           />
         </Routes>
       </BrowserRouter>
