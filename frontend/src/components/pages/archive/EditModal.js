@@ -70,7 +70,7 @@ const EditModal = ({ open, setOpen }) => {
           alignItems: "center",
           padding: "50px 0",
           background: "#fff",
-          margin: "0 15px",
+          margin: "30px 15px",
         }}
         onSubmit={handleSubmit(handleSubmitPostPage)}
       >
