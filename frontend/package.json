@@ -33,6 +33,9 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "styled-reset": "^4.4.2",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.6.15",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
