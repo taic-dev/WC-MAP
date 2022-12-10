@@ -3,6 +3,10 @@ import { Button, TextField } from "@mui/material";
 import { createUuid } from "../../templates/common/createUuid";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const ErrorSwal = withReactContent(Swal);
 
 const MultipleImageUpload = ({ register, images, setImages }) => {
   const maxImagesUpload = 4;
@@ -10,11 +14,14 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
   let UUID = createUuid();
 
   const handleOnAddImage = async (e) => {
-    if (!e.target.files) return;
+    if (!e.target || !e.target.files) return;
     console.log(e.target.files);
     // 10MB以上だったら 
     if (e.target.files[0].size >= 10485760){
-      alert("10MB以下の画像を選択してください");
+      ErrorSwal.fire({
+        title: "10MB以下の画像を選択してください",
+        icon: "error",
+      })
       return;
     }
     const files = e.target.files;
