@@ -1,8 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React,{ useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { validation } from "./validation";
+import { localStorageObj } from "../../templates/common/localStrage";
 import axios from "axios";
 import {
   Box,
@@ -12,7 +13,6 @@ import {
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
 
 const LoginMain = () => {
   const [loading, setLoading] = useState(false);
@@ -39,8 +39,9 @@ const LoginMain = () => {
     try {
       const res = await axios.get(loginURL, data);
       // stateの更新
+      // 入力内容に間違いなかったら以下を処理する
       dispatch({ type: "SUCCESS" });
-      localStorage.setItem("auth", true);
+      localStorageObj.setLocalStorage();
       setLoading(false);
       navigate("/admin");
     } catch (e) {
