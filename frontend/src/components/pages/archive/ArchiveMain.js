@@ -77,6 +77,31 @@ const ArchiveMain = () => {
             </Button>
           </CardActions>
         </Card>
+        
+        <Card sx={{ margin: "15px" }}>
+          <CardMedia
+            component="img"
+            height="200"
+            image={`${process.env.PUBLIC_URL}/img/page/no-image.png`}
+            alt="サムネイル画像"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              スターバックスコーヒー 松山市駅前店
+            </Typography>
+            <Typography variant="body2">
+              さすがのスターバックス！！いつも清潔に保たれています。さすがのスターバックス！！いつも清潔に保たれています。
+            </Typography>
+          </CardContent>
+          <CardActions sx={{ justifyContent: "end" }}>
+            <Button size="small" onClick={() => handleClickOpenModal({id: 1234})}>
+              編集
+            </Button>
+            <Button size="small" onClick={() => handleClickDeletePost(1234)}>
+              削除
+            </Button>
+          </CardActions>
+        </Card>
       </main>
       <AdminFooter />
       <EditModal open={open} setOpen={setOpen}></EditModal>
