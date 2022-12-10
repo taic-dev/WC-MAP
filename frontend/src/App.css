@@ -201,3 +201,13 @@
     object-fit: contain;
     overflow: hidden;
 }
+
+/* list */
+.archive__header{
+    background-image: url(../public/img/page/archive-page.png);
+}
+
+.archive__main{
+    height: auto;
+    margin: 50px auto 100px auto;
+}
