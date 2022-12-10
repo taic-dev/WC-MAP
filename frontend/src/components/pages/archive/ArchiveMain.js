@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 // components
 import Header from "../common/Header";
@@ -13,12 +15,9 @@ import {
   Typography,
 } from "@mui/material";
 
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-const ConfirmSwal = withReactContent(Swal);
-
 const ArchiveMain = () => {
+  const ConfirmSwal = withReactContent(Swal);
+
   const handleClickDeletePost = (id) => {
     ConfirmSwal.fire({
       title: "削除しますか？",
