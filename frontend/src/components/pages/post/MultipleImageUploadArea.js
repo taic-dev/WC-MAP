@@ -4,7 +4,7 @@ import { createUuid } from "../../templates/common/createUuid";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
-const MultipleImageUpload = ({ register, errors, images, setImages }) => {
+const MultipleImageUpload = ({ register, images, setImages }) => {
   const maxImagesUpload = 4;
   const inputId = Math.random().toString(32).substring(2);
   let UUID = createUuid();
@@ -33,7 +33,6 @@ const MultipleImageUpload = ({ register, errors, images, setImages }) => {
   };
 
   const handleOnRemoveImage = (id) => {
-    console.log(id);
     setImages(images.filter((img) => img.id !== id));
   };
 
@@ -55,7 +54,7 @@ const MultipleImageUpload = ({ register, errors, images, setImages }) => {
       </div>
       <label
         htmlFor={inputId}
-        style={{ 
+        style={{
           cursor: "pointer", 
           marginBottom: "50px", 
           width: "70%", 
