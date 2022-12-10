@@ -12,12 +12,14 @@ import LoginMain from "./components/pages/login/LoginMain";
 import SignupMain from "./components/pages/signup/SignupMain";
 import AdminMain from "./components/pages/admin/AdminMain";
 import PostMain from "./components/pages/post/PostMain";
+import { localStorageObj } from "./components/templates/common/localStrage";
 
 const App = () => {
   // state取得
   const stateAuth = useSelector((state) => state.auth);
   // ローカルストレージ取得
-  const localStrageAuth = localStorage.getItem("auth");
+  const localStrageAuth = localStorageObj.getLocalStorage();
+  console.log(localStrageAuth);
 
   return (
     <>

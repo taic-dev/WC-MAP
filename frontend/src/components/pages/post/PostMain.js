@@ -9,7 +9,6 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import Textarea from "@mui/joy/Textarea";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
@@ -37,8 +36,6 @@ function PostMain() {
     data.imageBase64 = images;
     console.log(data);
   };
-
-  console.log(errors);
 
   return (
     <>
@@ -71,7 +68,7 @@ function PostMain() {
             {...register("name",validation().name)}
           />
           <CurrentLocationArea register={register} errors={errors} />
-          <MultipleImageUploadArea register={register}  errors={errors} images={images} setImages={setImages} />
+          <MultipleImageUploadArea register={register} images={images} setImages={setImages} />
           <TextField
             id="standard-select-currency"
             label="料金"
