@@ -219,30 +219,6 @@ const EditModal = ({ open, setOpen }) => {
           </RadioGroup>
         </FormControl>
         <FormControl style={{ width: "70%", marginBottom: "50px" }}>
-          <FormLabel id="diaper-exchange-table-group-label">
-            おむつ交換台
-          </FormLabel>
-          <RadioGroup
-            aria-labelledby="diaper-exchange-table-group-label"
-            defaultValue="yes"
-            name="diaper-exchange-table"
-            row
-          >
-            <FormControlLabel
-              value="yes"
-              control={<Radio />}
-              label="あり"
-              {...register("diaperExchangeTable")}
-            />
-            <FormControlLabel
-              value="no"
-              control={<Radio />}
-              label="なし"
-              {...register("diaperExchangeTable")}
-            />
-          </RadioGroup>
-        </FormControl>
-        <FormControl style={{ width: "70%", marginBottom: "50px" }}>
           <FormLabel id="multi-purpose-room-group-label">多目的室</FormLabel>
           <RadioGroup
             aria-labelledby="multi-purpose-room-group-label"
