@@ -20,7 +20,6 @@ import CurrencyYenIcon from "@mui/icons-material/CurrencyYen";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccessibleIcon from "@mui/icons-material/Accessible";
-import BabyChangingStationIcon from "@mui/icons-material/BabyChangingStation";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
@@ -113,14 +112,6 @@ const InfoArea = ({
                   <FontAwesomeIcon style={{ width: "20px" }} icon={faDroplet} />
                 </ListItemIcon>
                 <ListItemText primary={`ウオシュレット ${detail[0].water}`} />
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <BabyChangingStationIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={`おむつ交換台 ${detail[0].babyChangingStation}`}
-                />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
