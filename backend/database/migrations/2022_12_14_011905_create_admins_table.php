@@ -16,11 +16,10 @@ class CreateAdminsTable extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->increments("id");
             $table->string("name");
-            $table->string("mail");
+            $table->string("mail")->unique();
             $table->string("password");
             $table->timestamp("deleted_at")->nullable();
             $table->timestamps();
-            $table->unique(['id','admin_id','mail']);
         });
     }
 
