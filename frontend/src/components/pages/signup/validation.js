@@ -1,6 +1,12 @@
 export const validation = ( getValues ) => {
 
   const validationSignup = {
+    name: {
+      required: {
+        value: true,
+        message: "入力が必須です",
+      }
+    },
     email: {
       required: {
         value: true,
