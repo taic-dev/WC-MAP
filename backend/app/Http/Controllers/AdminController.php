@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
@@ -11,14 +12,21 @@ class AdminController extends Controller
     public function signUp(Request $request)
     {
         try{
-            $post = new Admin();
-            $post->name = $request->input('name');
-            $post->mail = $request->input('email');
-            $post->password = Hash::make($request->input('password'));
-            $post->created_at = now();
-            $post->updated_at = now();
-            $post->save();
-            return response()->json(Admin::all());
+            $admin = new Admin();
+            $mail_check = DB::table('admins')->where('mail',$request->email)->exists();
+
+            if($mail_check){
+                return ["error" => "メールアドレスが既に使用されています"];
+            }
+
+            $admin->name = $request->input('name');
+            $admin->mail = $request->input('email');
+            $admin->password = Hash::make($request->input('password'));
+            $admin->created_at = now();
+            $admin->updated_at = now();
+            $admin->save();
+            return response()->json(["success" => "登録が完了しました"]);
+
         }catch(\Exception $e){
             return ["error" => "情報が正しくありません"];
         }
