@@ -24,14 +24,29 @@ const SignupMain = () => {
     criteriaMode: "all",
   });
 
-  const signupURL = "";
+  axios.defaults.baseURL = 'http://localhost:8000';
+  axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+  axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://localhost:8000';
+
+  const url = "http://localhost:8000/api/signup";
 
   const handleSubmitPostSignup = async (data) => {
     console.log(data);
     setLoading(true);
     try {
-      const res = await axios.post(signupURL, data);
+      const res = await axios.post(url, data);
+      console.log(res);
+
+      if(res.data.error){
+        setError({ alert: res.data.error })
+        setLoading(false);
+        return;
+      }
+
+      // 普通のアラートで登録完了と出したい。
+      setError({ alert: res.data.success });
       setLoading(false);
+      return;
     } catch (e) {
       setLoading(false);
       setError({ alert: "ログイン失敗" });
@@ -66,6 +81,20 @@ const SignupMain = () => {
         <Typography variant={"h5"} sx={{ mb: "30px" }}>
           Sign Up
         </Typography>
+        <TextField
+          id="standard-required"
+          type="text"
+          name="name"
+          label="ユーザーネーム"
+          variant="standard"
+          sx={{ width: "70%", marginBottom: "50px" }}
+          helperText={
+            (errors.name?.types.required && errors.name.message) ||
+            (errors.name?.types.pattern && errors.name.message)
+          }
+          error={errors.name && true}
+          {...register("name", validation().name)}
+        />
         <TextField
           id="standard-required"
           type="email"
