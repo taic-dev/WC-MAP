@@ -25,10 +25,6 @@ const LoginMain = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  axios.defaults.baseURL = 'http://localhost:8000';
-  axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-  axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://localhost:8000';
   
   const url = "http://localhost:8000/api/login";
 
