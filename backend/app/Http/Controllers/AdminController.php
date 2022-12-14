@@ -25,12 +25,20 @@ class AdminController extends Controller
     }
 
     public function logIn(Request $request)
-    {
-        
+    { 
         try{
-            $mail = $request['email'];
-            $password = $request['password'];
+            $mail = $request->email;
+            $password = $request->password;
             $admin_array = Admin::where('mail','=',$mail)->first();
+
+            if (empty($admin_array)) {
+                return ["error" => "情報が正しくありません"];
+            }
+
+            if (!password_verify($password,$admin_array->password)) {
+                return ["error" => "情報が正しくありません"];
+            }
+
             return response()->json($admin_array);
 
         }catch(\Exception $e){
