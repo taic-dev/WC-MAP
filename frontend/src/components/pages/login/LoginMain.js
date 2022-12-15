@@ -79,7 +79,7 @@ const LoginMain = () => {
           </Alert>
         )}
 
-        <Typography variant={"h5"} sx={{ mb: "30px" }}>
+        <Typography variant={"h5"} sx={{ mb: "30px", fontFamily: "nicokaku" }}>
           Log In
         </Typography>
         <TextField
