@@ -56,7 +56,7 @@ const InfoArea = ({
               onClick={() => handleActiveMarker(false)} 
             />
           <div className="info-area__title">
-            <h1>{name}</h1>
+            <h1 className="common__font-family">{name}</h1>
           </div>
           <div className="info-area__review">
             <span>{review}</span>

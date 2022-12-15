@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 
 const SignupMain = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({ alert: false });
+  const [alert, setAlert] = useState({ error: false, success: false });
 
   console.log(validation());
 
@@ -34,18 +34,18 @@ const SignupMain = () => {
       console.log(res);
 
       if(res.data.error){
-        setError({ alert: res.data.error })
+        setAlert({ ...alert, error: res.data.error, success: false })
         setLoading(false);
         return;
       }
 
       // 普通のアラートで登録完了と出したい。
-      setError({ alert: res.data.success });
+      setAlert({ ...alert, error: false, success: res.data.success });
       setLoading(false);
       return;
     } catch (e) {
       setLoading(false);
-      setError({ alert: "ログイン失敗" });
+      setAlert({ ...alert, error: "ログイン失敗", success: false });
       console.error("送信失敗");
     }
   };
@@ -65,16 +65,10 @@ const SignupMain = () => {
         }}
         onSubmit={handleSubmit(handleSubmitPostSignup)}
       >
-        {error.alert && (
-          <Alert
-            severity="error"
-            sx={{ position: "absolute", top: "50px", width: "85%" }}
-          >
-            {error.alert}
-          </Alert>
-        )}
+        {alert.error && <Alert severity="error" sx={{ position: "absolute", top: "50px", width: "85%" }} > { alert.error } </Alert> }
+        {alert.success && <Alert severity="success" sx={{ position: "absolute", top: "50px", width: "85%" }} > { alert.success } </Alert> }
 
-        <Typography variant={"h5"} sx={{ mb: "30px" }}>
+        <Typography variant={"h5"} sx={{ mb: "30px", fontFamily: "nicokaku" }}>
           Sign Up
         </Typography>
         <TextField

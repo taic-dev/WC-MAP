@@ -1,3 +1,8 @@
+@font-face {
+    font-family: nicokaku;
+    src: url(../src/assets/fonts/nicokaku_v2.ttf);
+}
+
 .main{
     position: relative;
     max-width: 450px;
@@ -23,6 +28,11 @@
 }
 
 /* common */
+.common__font-family{
+    font-family: nicokaku;
+}
+
+
 .common__header{
     position: relative;
     top: 0;
@@ -57,7 +67,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    margin: 3px 0;
+    margin: 7px 0 0 3px;
 }
 
 /* info-area */
@@ -107,7 +117,7 @@
 }
 
 .info-area__title{
-    font-size: 18px;
+    font-size: 22px;
     width: 88%;
     line-height: 1.5;
 }
