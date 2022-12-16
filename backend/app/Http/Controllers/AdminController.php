@@ -34,14 +34,14 @@ class AdminController extends Controller
     public function logIn(Request $request)
     { 
         try{
-            $mail = $request->email;
-            $password = $request->password;
-            $admin_array = Admin::where('mail','=',$mail)->first();
+            $admin = new Admin();
+            $admin_array = $admin->get_admin($request);
 
             if (empty($admin_array)) {
                 return ["error" => "情報が正しくありません"];
             }
 
+            $password = $request->password;
             if (!password_verify($password,$admin_array->password)) {
                 return ["error" => "情報が正しくありません"];
             }
