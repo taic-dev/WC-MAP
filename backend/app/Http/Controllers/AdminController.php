@@ -15,6 +15,7 @@ class AdminController extends Controller
             $admin = new Admin();
 
             $mail_check = $admin->mail_check($request);
+
             if($mail_check){
                 return ["error" => "メールアドレスが既に使用されています"];
             }
