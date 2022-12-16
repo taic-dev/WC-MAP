@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { validation } from "./validation";
 import { localStorageObj } from "../../templates/common/localStrage";
@@ -111,19 +111,20 @@ const LoginMain = () => {
           {...register("password", validation.password)}
         />
         {loading ? (
-          <LoadingButton loading variant="outlined" sx={{ width: "70%" }}>
+          <LoadingButton loading variant="outlined" sx={{ width: "70%", marginBottom: "30px" }}>
             Submit
           </LoadingButton>
         ) : (
           <Button
             variant="contained"
             type="submit"
-            sx={{ width: "70%" }}
+            sx={{ width: "70%", marginBottom: "30px" }}
             disabled={!isDirty || !isValid}
           >
             Login
           </Button>
         )}
+      <Link to="/signup" style={{ fontSize: "13px" }}>Signupはこちら</Link>
       </Box>
     </main>
   );

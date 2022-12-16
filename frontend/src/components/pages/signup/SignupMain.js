@@ -7,12 +7,15 @@ import { Box, TextField, Typography } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
+import { createUuid } from "../../templates/common/createUuid";
 
 const SignupMain = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ error: false, success: false });
 
   console.log(validation());
+
+  const uuid = createUuid();
 
   const {
     register,
@@ -27,8 +30,10 @@ const SignupMain = () => {
   const url = "http://localhost:8000/api/signup";
 
   const handleSubmitPostSignup = async (data) => {
+    data.admin_id = uuid;
     console.log(data);
     setLoading(true);
+    
     try {
       const res = await axios.post(url, data);
       console.log(res);
