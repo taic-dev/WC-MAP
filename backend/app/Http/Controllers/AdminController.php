@@ -13,22 +13,21 @@ class AdminController extends Controller
     {
         try{
             $admin = new Admin();
-            $mail_check = DB::table('admins')->where('mail',$request->email)->exists();
 
+            $mail_check = $admin->mail_check($request);
             if($mail_check){
                 return ["error" => "メールアドレスが既に使用されています"];
             }
 
-            $admin->name = $request->input('name');
-            $admin->mail = $request->input('email');
-            $admin->password = Hash::make($request->input('password'));
-            $admin->created_at = now();
-            $admin->updated_at = now();
-            $admin->save();
+            $insert = $admin->insert($request);
+            if(!$insert){
+                return ["error" => "情報が正しくありません"];
+            }
+
             return response()->json(["success" => "登録が完了しました"]);
 
         }catch(\Exception $e){
-            return ["error" => "情報が正しくありません"];
+            return ["error" => "サインアップできませんでした"];
         }
     }
 
