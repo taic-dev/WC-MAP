@@ -15,6 +15,7 @@ class CreateToiletsTable extends Migration
     {
         Schema::create('toilets', function (Blueprint $table) {
             $table->increments("id");
+            $table->biginteger("admin_id")->unique();
             $table->biginteger("toilet_id")->unique();
             $table->string("toilet_name");
             $table->double("latitude",9,7);
