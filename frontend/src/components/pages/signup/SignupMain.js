@@ -45,7 +45,7 @@ const SignupMain = () => {
       return;
     } catch (e) {
       setLoading(false);
-      setAlert({ ...alert, error: "ログイン失敗", success: false });
+      setAlert({ ...alert, error: "サインアップ失敗", success: false });
       console.error("送信失敗");
     }
   };
