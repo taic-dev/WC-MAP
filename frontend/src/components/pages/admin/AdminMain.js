@@ -42,7 +42,7 @@ const AdminMain = () => {
               primary={`投稿された全てのトイレ件数`}
               secondary={
                 <Typography
-                  sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end" }}
+                  sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end", fontFamily: "nicokaku" }}
                   component="span"
                 >
                   50件
@@ -59,7 +59,7 @@ const AdminMain = () => {
               primary={`あなたが投稿したトイレ件数`}
               secondary={
                 <Typography
-                  sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end" }}
+                  sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end", fontFamily: "nicokaku" }}
                   component="span"
                 >
                   4件

@@ -61,7 +61,7 @@ const ArchiveMain = () => {
             alt="サムネイル画像"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h5" component="div" sx={{ fontFamily: "nicokaku" }}>
               スターバックスコーヒー 松山市駅前店
             </Typography>
             <Typography variant="body2">
@@ -86,7 +86,7 @@ const ArchiveMain = () => {
             alt="サムネイル画像"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h5" component="div" sx={{ fontFamily: "nicokaku" }}>
               スターバックスコーヒー 松山市駅前店
             </Typography>
             <Typography variant="body2">
