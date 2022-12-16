@@ -22,4 +22,9 @@ class Admin extends Model
         return $this->save();
     }
 
+    public function get_admin($request){
+        $mail = $request->email;
+        return Admin::where('mail','=',$mail)->first();
+    }
+
 }
