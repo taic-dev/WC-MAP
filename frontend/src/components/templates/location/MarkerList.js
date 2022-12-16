@@ -170,7 +170,7 @@ const MarkerList = ({ setInfoArea }) => {
                 onCloseClick={() => setActiveMarker(false)}
               >
                 <div>
-                  <h1>{getMarker.name}</h1>
+                  <h1 style={{ fontSize: "18px" }} className="common__font-family">{getMarker.name}</h1>
                   <div className="info-window__review">
                     <span>{getMarker.review}</span>
                     <Rating
