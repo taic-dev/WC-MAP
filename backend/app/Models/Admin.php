@@ -14,6 +14,7 @@ class Admin extends Model
     }
 
     public function insert($request){
+        $this->admin_id = $request->input('admin_id');
         $this->name = $request->input('name');
         $this->email = $request->input('email');
         $this->password = Hash::make($request->input('password'));

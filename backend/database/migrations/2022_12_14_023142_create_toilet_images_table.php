@@ -15,7 +15,7 @@ class CreateToiletImagesTable extends Migration
     {
         Schema::create('toilet_images', function (Blueprint $table) {
             $table->increments("id");
-            $table->biginteger("toilet_id")->unique();
+            $table->string("toilet_id")->unique();
             $table->string("image_url");
             $table->timestamp("deleted_at")->nullable();
             $table->timestamps();
