@@ -26,7 +26,7 @@ const LoginMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const url = "http://localhost:8000/api/login";
+  const url = "/api/login";
 
   const handleSubmitPostLogin = async (data) => {
     console.log(data);
@@ -47,7 +47,6 @@ const LoginMain = () => {
       dispatch({ type: "SUCCESS" });
       localStorageObj.setLocalStorage();
       setLoading(false);
-      navigate("/admin");
     } catch (e) {
       setLoading(false);
       setError({ alert: "ログイン失敗" });

@@ -27,13 +27,13 @@ const SignupMain = () => {
     criteriaMode: "all",
   });
 
-  const url = "http://localhost:8000/api/signup";
+  const url = "/api/signup";
 
   const handleSubmitPostSignup = async (data) => {
     data.admin_id = uuid;
     console.log(data);
     setLoading(true);
-    
+
     try {
       const res = await axios.post(url, data);
       console.log(res);
@@ -44,7 +44,6 @@ const SignupMain = () => {
         return;
       }
 
-      // 普通のアラートで登録完了と出したい。
       setAlert({ ...alert, error: false, success: res.data.success });
       setLoading(false);
       return;
