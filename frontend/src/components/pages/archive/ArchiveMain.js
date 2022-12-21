@@ -1,7 +1,7 @@
-import React,{ useState } from "react";
-import { Link } from "react-router-dom";
+import React,{ useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import axios from "axios";
 
 // components
 import Header from "../common/Header";
@@ -14,11 +14,28 @@ import {
   CardMedia,
   Button,
   Typography,
+  Alert,
 } from "@mui/material";
 
 const ArchiveMain = () => {
   const [open,setOpen] = useState(false);
+  const [alert,setAlert] = useState(false);
 
+  const url = "/api/archive";
+
+  useEffect(()=>{
+    (async ()=>{
+      try{
+        const res = await axios.get(url);
+        console.log(res);
+        if(res.data.session.alert.success){
+          setAlert(res.data.session.alert.success);
+        }
+      }catch (e){
+        return e;
+      }
+    })();
+  },[]);
 
   const ConfirmSwal = withReactContent(Swal);
 
@@ -53,6 +70,7 @@ const ArchiveMain = () => {
     <>
       <Header page="archive">投稿一覧</Header>
       <main className="main archive__main">
+      {alert && <Alert severity="success" sx={{ position: "fixed", top: "15vh", left: "0", right: "0", maxWidth: "450px", margin: "auto" }} > { alert } </Alert>}
         <Card sx={{ margin: "15px" }}>
           <CardMedia
             component="img"

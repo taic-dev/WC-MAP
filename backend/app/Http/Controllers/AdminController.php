@@ -21,10 +21,11 @@ class AdminController extends Controller
             }
 
             $insert = $admin->insert($request);
+
             if(!$insert){
                 return ["error" => "情報が正しくありません"];
             }
-
+            
             return response()->json(["success" => "登録が完了しました"]);
 
         }catch(\Exception $e){
@@ -37,15 +38,17 @@ class AdminController extends Controller
         try{
             $admin = new Admin();
             $admin_array = $admin->get_admin($request);
+            $password = $request->password;
 
             if (empty($admin_array)) {
                 return ["error" => "情報が正しくありません"];
             }
 
-            $password = $request->password;
             if (!password_verify($password,$admin_array->password)) {
                 return ["error" => "情報が正しくありません"];
             }
+
+            session(['admin_id' => $admin_array->admin_id]);
 
             return response()->json($admin_array);
 

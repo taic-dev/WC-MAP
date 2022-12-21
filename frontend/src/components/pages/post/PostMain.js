@@ -17,11 +17,16 @@ import Header from "../common/Header";
 import MultipleImageUploadArea from "./MultipleImageUploadArea";
 import CurrentLocationArea from "./CurrentLocationArea";
 import validation from "./validation";
+import axios from "axios";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { createUuid } from "../../templates/common/createUuid";
 
 function PostMain() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ alert: false });
   const [images, setImages] = useState([]);
+
+  const uuid = createUuid();
 
   const {
     register,
@@ -32,9 +37,27 @@ function PostMain() {
     criteriaMode: "all",
   });
 
+  const url = "/api/post"
+
   const handleSubmitPostPage = async (data) => {
+    setLoading(true);
+    data.toilet_id = uuid;
     data.imageBase64 = images;
     console.log(data);
+    try{
+      const res = await axios.post(url,data);
+
+      if(!res.data.success){
+        setLoading(false);
+        return;
+      }
+
+      window.location.href="/archive";
+      setLoading(false);
+    }catch (e){
+      setLoading(false);
+      setError({ alert: "投稿失敗" });
+    }
   };
 
   return (
@@ -96,16 +119,16 @@ function PostMain() {
             error={errors.clean && true}
             {...register("clean",validation().clean)}
           >
-            <MenuItem key="" value="excellent">
+            <MenuItem key="" value="非常に綺麗">
               非常に綺麗
             </MenuItem>
-            <MenuItem key="" value="good">
+            <MenuItem key="" value="綺麗">
               綺麗
             </MenuItem>
-            <MenuItem key="" value="bad">
+            <MenuItem key="" value="汚い">
               汚い
             </MenuItem>
-            <MenuItem key="" value="terrible">
+            <MenuItem key="" value="非常に汚い">
               非常に汚い
             </MenuItem>
           </TextField>
@@ -142,18 +165,18 @@ function PostMain() {
             <FormLabel id="private-room-type-group-label">個室タイプ</FormLabel>
             <RadioGroup
               aria-labelledby="private-room-type-group-label"
-              defaultValue="sum"
+              defaultValue="和式"
               name="private-room-type"
               row
             >
               <FormControlLabel
-                value="sum"
+                value="和式"
                 control={<Radio />}
                 label="和式"
                 {...register("privateRoomType")}
               />
               <FormControlLabel
-                value="western"
+                value="洋式"
                 control={<Radio />}
                 label="洋式"
                 {...register("privateRoomType")}
@@ -164,18 +187,18 @@ function PostMain() {
             <FormLabel id="washlet-group-label">ウォシュレット</FormLabel>
             <RadioGroup
               aria-labelledby="washlet-group-label"
-              defaultValue="yes"
+              defaultValue="1"
               name="washlet"
               row
             >
               <FormControlLabel
-                value="yes"
+                value="1"
                 control={<Radio />}
                 label="あり"
                 {...register("washlet")}
               />
               <FormControlLabel
-                value="no"
+                value="0"
                 control={<Radio />}
                 label="なし"
                 {...register("washlet")}
@@ -186,18 +209,18 @@ function PostMain() {
             <FormLabel id="multi-purpose-room-group-label">多目的室</FormLabel>
             <RadioGroup
               aria-labelledby="multi-purpose-room-group-label"
-              defaultValue="yes"
+              defaultValue="1"
               name="multi-purpose-room"
               row
             >
               <FormControlLabel
-                value="yes"
+                value="1"
                 control={<Radio />}
                 label="あり"
                 {...register("multiPurposeRoom")}
               />
               <FormControlLabel
-                value="no"
+                value="0"
                 control={<Radio />}
                 label="なし"
                 {...register("multiPurposeRoom")}
@@ -220,15 +243,21 @@ function PostMain() {
             error={errors.description && true}
             {...register("description",validation().description)}
           />
-          <Button
-            variant="contained"
-            type="submit"
-            endIcon={<SendIcon />}
-            style={{ marginBottom: "50px" }}
-            disabled={!isDirty || !isValid}
-          >
-            確認画面へ
-          </Button>
+          {loading ? (
+            <LoadingButton loading variant="outlined" sx={{ width: "70%", marginBottom: "50px" }}>
+              Submit
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              type="submit"
+              endIcon={<SendIcon />}
+              style={{ width: "70%", marginBottom: "50px" }}
+              disabled={!isDirty || !isValid}
+            >
+              投稿
+            </Button>
+          )}
         </Box>
       </main>
       <AdminFooter />

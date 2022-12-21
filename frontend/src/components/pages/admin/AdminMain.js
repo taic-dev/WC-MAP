@@ -10,8 +10,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faToilet } from "@fortawesome/free-solid-svg-icons";
 import WcIcon from '@mui/icons-material/Wc';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 // components
 import Header from "../common/Header";
@@ -19,6 +20,20 @@ import AdminFooter from "../common/AdminFooter";
 
 const AdminMain = () => {
   const auth = useSelector((state) => state.auth);
+
+  const url = "/api/admin";
+
+  useEffect(()=>{
+    (async ()=>{
+      try{
+        const res = await axios.get(url);
+        console.log(res);
+        return;
+      }catch (e){
+        return e;
+      }
+    })();
+  },[]);
 
   return (
     <>
