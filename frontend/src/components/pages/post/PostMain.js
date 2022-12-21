@@ -46,10 +46,14 @@ function PostMain() {
     console.log(data);
     try{
       const res = await axios.post(url,data);
-      console.log(res);
-      setLoading(false);
-      return;
 
+      if(!res.data.success){
+        setLoading(false);
+        return;
+      }
+
+      window.location.href="/archive";
+      setLoading(false);
     }catch (e){
       setLoading(false);
       setError({ alert: "投稿失敗" });
