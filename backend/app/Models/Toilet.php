@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Toilet extends Model
 {
-    public function insert($request){
+    public function insert($request)
+    {
         $this->admin_id = session("admin_id");
         $this->toilet_id = $request->input('toilet_id');
         $this->toilet_name = $request->input('name');

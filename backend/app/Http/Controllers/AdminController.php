@@ -21,10 +21,11 @@ class AdminController extends Controller
             }
 
             $insert = $admin->insert($request);
+
             if(!$insert){
                 return ["error" => "情報が正しくありません"];
             }
-
+            
             return response()->json(["success" => "登録が完了しました"]);
 
         }catch(\Exception $e){
@@ -48,7 +49,7 @@ class AdminController extends Controller
             }
 
             session(['admin_id' => $admin_array->admin_id]);
-            
+
             return response()->json($admin_array);
 
         }catch(\Exception $e){
