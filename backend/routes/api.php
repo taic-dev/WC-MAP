@@ -21,4 +21,5 @@ Route::group(['middleware' => ['api','cors']], function(){
     Route::post('login',[AdminController::class, 'logIn']);
     Route::post('post',[ToiletController::class, 'addToilet']);
     Route::get('admin',[ToiletController::class, 'getToiletNum']);
+    Route::get('archive',[ToiletController::class, 'getToiletList']);
 });
