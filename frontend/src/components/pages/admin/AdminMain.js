@@ -19,21 +19,23 @@ import Header from "../common/Header";
 import AdminFooter from "../common/AdminFooter";
 
 const AdminMain = () => {
+  const [toiletInfo,setToiletInfo] = useState([]);
   const auth = useSelector((state) => state.auth);
-
   const url = "/api/admin";
 
   useEffect(()=>{
     (async ()=>{
       try{
         const res = await axios.get(url);
-        console.log(res);
+        setToiletInfo(res.data.toilet_info);
         return;
       }catch (e){
         return e;
       }
     })();
   },[]);
+
+  console.log(toiletInfo);
 
   return (
     <>
@@ -44,7 +46,7 @@ const AdminMain = () => {
             <ListItemAvatar>
               <Avatar></Avatar>
             </ListItemAvatar>
-            <ListItemText primary="ようこそ! 〇〇さん" />
+            <ListItemText primary={`ようこそ! ${toiletInfo.user_name}さん`} />
           </ListItem>
         </List>
         <List>
@@ -60,7 +62,7 @@ const AdminMain = () => {
                   sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end", fontFamily: "nicokaku" }}
                   component="span"
                 >
-                  50件
+                  {toiletInfo.all_toilet_num}件
                 </Typography>
               }
             />
@@ -77,7 +79,7 @@ const AdminMain = () => {
                   sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end", fontFamily: "nicokaku" }}
                   component="span"
                 >
-                  4件
+                  {toiletInfo.my_post_toilet_num}件
                 </Typography>
               }
             />

@@ -70,7 +70,7 @@ const ArchiveMain = () => {
     <>
       <Header page="archive">投稿一覧</Header>
       <main className="main archive__main">
-      {alert && <Alert severity="success" sx={{ position: "fixed", top: "15vh", left: "0", right: "0", maxWidth: "450px", margin: "auto" }} > { alert } </Alert>}
+      {alert && <Alert severity="success" sx={{ position: "absolute", top: "-50px", left: "0", right: "0", maxWidth: "450px", margin: "auto" }} > { alert } </Alert>}
         <Card sx={{ margin: "15px" }}>
           <CardMedia
             component="img"
