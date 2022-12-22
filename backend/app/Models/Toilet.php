@@ -25,4 +25,12 @@ class Toilet extends Model
         $this->updated_at = now();
         return $this->save();
     }
+
+    public function allToilet($admin_id){
+        return Toilet::all()->whereNull('deleted_at');
+    }
+
+    public function myToilet($admin_id){
+        return Toilet::all()->where('admin_id','=',$admin_id)->whereNull('deleted_at');
+    }
 }
