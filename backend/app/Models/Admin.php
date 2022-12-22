@@ -24,6 +24,10 @@ class Admin extends Model
     }
 
     public function get_admin($request){
+        if(empty($request->email)){
+            return Admin::where('admin_id','=',$request)->first(['name']);            
+        }
+
         $email = $request->email;
         return Admin::where('email','=',$email)->first();
     }
