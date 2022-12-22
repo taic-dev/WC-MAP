@@ -4,11 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Library\UpdateImageClass;
+use App\Models\Admin;
 use App\Models\Toilet;
 use App\Models\Toilet_image;
 
 class ToiletController extends Controller
 {
+    public function getToiletNum()
+    {
+        try{
+            $admin = new Admin();
+            $toilet = new Toilet();
+            $admin_id = session('admin_id');
+            $user_name = $admin->get_admin($admin_id);
+            $all_toilet_num = count($toilet->allToilet($admin_id));
+            $my_post_toilet_num = count($toilet->myToilet($admin_id));
+            return response()->json([
+                "toilet_info" => [
+                    "user_name" => $user_name->name, 
+                    "all_toilet_num" => $all_toilet_num, 
+                    "my_post_toilet_num" => $my_post_toilet_num
+                ]
+            ]);
+        }catch(\Exception $e){
+            return $e;
+        }
+    }
 
     public function addToilet(Request $request)
     {
@@ -40,16 +61,6 @@ class ToiletController extends Controller
 
         }catch(\Exception $e){
             return ["test" => $e];
-        }
-    }
-
-    public function getToiletNum()
-    {
-        try{
-            $admin_id = session('admin_id');
-            return ["session" => $admin_id];
-        }catch(\Exception $e){
-            return $e;
         }
     }
 
