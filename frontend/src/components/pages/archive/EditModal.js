@@ -21,7 +21,7 @@ import MultipleImageUploadArea from "./MultipleImageUploadArea";
 import CurrentLocationArea from "./CurrentLocationArea";
 import validation from "./validation";
 
-const EditModal = ({ open, setOpen }) => {
+const EditModal = ({ open, setOpen, toiletItemDetail }) => {
   const [images, setImages] = useState([]);
 
   const {
@@ -83,10 +83,11 @@ const EditModal = ({ open, setOpen }) => {
           onClick={()=>handleClickCloseModal()}
         />
         <TextField
-          id="standard-required"
+          id="toilet_name"
           type="text"
           variant="standard"
           label="トイレの名前"
+          value={toiletItemDetail.toilet_name}
           sx={{ width: "70%", marginBottom: "50px" }}
           helperText={
             (errors.name?.types.required && errors.name.message) ||
@@ -96,7 +97,7 @@ const EditModal = ({ open, setOpen }) => {
           error={errors.name && true}
           {...register("name", validation().name)}
         />
-        <CurrentLocationArea register={register} errors={errors} />
+        <CurrentLocationArea register={register} toiletItemDetail={toiletItemDetail} errors={errors} />
         <MultipleImageUploadArea
           register={register}
           images={images}
@@ -105,6 +106,7 @@ const EditModal = ({ open, setOpen }) => {
         <TextField
           id="standard-select-currency"
           label="料金"
+          value={toiletItemDetail.price}
           variant="standard"
           sx={{ width: "70%", marginBottom: "50px" }}
           select
@@ -122,6 +124,7 @@ const EditModal = ({ open, setOpen }) => {
         <TextField
           id="standard-select-currency"
           label="清潔さ"
+          value={toiletItemDetail.cleanliness}
           variant="standard"
           style={{ width: "70%", marginBottom: "50px" }}
           select
@@ -129,22 +132,23 @@ const EditModal = ({ open, setOpen }) => {
           error={errors.clean && true}
           {...register("clean", validation().clean)}
         >
-          <MenuItem key="" value="excellent">
+          <MenuItem key="" value="非常に綺麗">
             非常に綺麗
           </MenuItem>
-          <MenuItem key="" value="good">
+          <MenuItem key="" value="綺麗">
             綺麗
           </MenuItem>
-          <MenuItem key="" value="bad">
+          <MenuItem key="" value="汚い">
             汚い
           </MenuItem>
-          <MenuItem key="" value="terrible">
+          <MenuItem key="" value="非常に汚い">
             非常に汚い
           </MenuItem>
         </TextField>
         <TextField
           id="standard-select-currency"
           label="個室数"
+          value={toiletItemDetail.private_room_num}
           variant="standard"
           style={{ width: "70%", marginBottom: "50px" }}
           select
@@ -178,18 +182,18 @@ const EditModal = ({ open, setOpen }) => {
           <FormLabel id="private-room-type-group-label">個室タイプ</FormLabel>
           <RadioGroup
             aria-labelledby="private-room-type-group-label"
-            defaultValue="sum"
+            defaultValue={toiletItemDetail.private_room_type}
             name="private-room-type"
             row
           >
             <FormControlLabel
-              value="sum"
+              value="和式"
               control={<Radio />}
               label="和式"
               {...register("privateRoomType")}
             />
             <FormControlLabel
-              value="western"
+              value="洋式"
               control={<Radio />}
               label="洋式"
               {...register("privateRoomType")}
@@ -200,18 +204,18 @@ const EditModal = ({ open, setOpen }) => {
           <FormLabel id="washlet-group-label">ウォシュレット</FormLabel>
           <RadioGroup
             aria-labelledby="washlet-group-label"
-            defaultValue="yes"
+            defaultValue={toiletItemDetail.is_washlet}
             name="washlet"
             row
           >
             <FormControlLabel
-              value="yes"
+              value="1"
               control={<Radio />}
               label="あり"
               {...register("washlet")}
             />
             <FormControlLabel
-              value="no"
+              value="0"
               control={<Radio />}
               label="なし"
               {...register("washlet")}
@@ -222,18 +226,18 @@ const EditModal = ({ open, setOpen }) => {
           <FormLabel id="multi-purpose-room-group-label">多目的室</FormLabel>
           <RadioGroup
             aria-labelledby="multi-purpose-room-group-label"
-            defaultValue="yes"
+            defaultValue={toiletItemDetail.is_multi_purpose_room}
             name="multi-purpose-room"
             row
           >
             <FormControlLabel
-              value="yes"
+              value="1"
               control={<Radio />}
               label="あり"
               {...register("multiPurposeRoom")}
             />
             <FormControlLabel
-              value="no"
+              value="0"
               control={<Radio />}
               label="なし"
               {...register("multiPurposeRoom")}
@@ -245,6 +249,7 @@ const EditModal = ({ open, setOpen }) => {
           type="text"
           variant="standard"
           label="説明"
+          value={toiletItemDetail.description}
           rows={10}
           sx={{ width: "70%", marginBottom: "50px" }}
           multiline
