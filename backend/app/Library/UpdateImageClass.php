@@ -18,7 +18,7 @@ class UpdateImageClass
                 list(, $file_data) = explode(',', $file_data);
                 $file_data = base64_decode($file_data);
                 $image_name = md5(uniqid(rand(), true)). ".$extension";
-                \File::put(storage_path(). '/' . $image_name , $file_data);
+                \File::put(storage_path(). '/app/public/' . $image_name , $file_data);
                 $image_array[] = $image_name;
             }
             return $image_array;

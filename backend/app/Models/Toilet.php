@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Toilet;
+use App\Models\Toilet_image;
 
 class Toilet extends Model
 {
@@ -33,4 +35,9 @@ class Toilet extends Model
     public function myToilet($admin_id){
         return Toilet::all()->where('admin_id','=',$admin_id)->whereNull('deleted_at');
     }
+
+    public function toiletImage(){
+        return $this->hasMany(Toilet_image::class,'toilet_id','toilet_id');
+    }
+
 }
