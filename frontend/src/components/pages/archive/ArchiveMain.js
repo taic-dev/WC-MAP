@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 
 const ArchiveMain = () => {
+  const [toiletList,setToiletList] = useState([]);
   const [open,setOpen] = useState(false);
   const [alert,setAlert] = useState(false);
 
@@ -27,7 +28,8 @@ const ArchiveMain = () => {
     (async ()=>{
       try{
         const res = await axios.get(url);
-        console.log(res);
+        console.log(res.data.toiletInfo);
+        setToiletList(res.data.toiletInfo);
         if(res.data.session.alert.success){
           setAlert(res.data.session.alert.success);
         }
@@ -70,56 +72,36 @@ const ArchiveMain = () => {
     <>
       <Header page="archive">投稿一覧</Header>
       <main className="main archive__main">
-      {alert && <Alert severity="success" sx={{ position: "absolute", top: "-50px", left: "0", right: "0", maxWidth: "450px", margin: "auto" }} > { alert } </Alert>}
-        <Card sx={{ margin: "15px" }}>
-          <CardMedia
-            component="img"
-            height="200"
-            image={`${process.env.PUBLIC_URL}/img/page/no-image.png`}
-            alt="サムネイル画像"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div" sx={{ fontFamily: "nicokaku" }}>
-              スターバックスコーヒー 松山市駅前店
-            </Typography>
-            <Typography variant="body2">
-              さすがのスターバックス！！いつも清潔に保たれています。さすがのスターバックス！！いつも清潔に保たれています。
-            </Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: "end" }}>
-            <Button size="small" onClick={() => handleClickOpenModal({id: 1234})}>
-              編集
-            </Button>
-            <Button size="small" onClick={() => handleClickDeletePost(1234)}>
-              削除
-            </Button>
-          </CardActions>
-        </Card>
+        {alert && <Alert severity="success" sx={{ position: "absolute", top: "-75px", left: "0", right: "0", maxWidth: "450px", margin: "auto 15px" }} > { alert } </Alert>}
         
-        <Card sx={{ margin: "15px" }}>
-          <CardMedia
-            component="img"
-            height="200"
-            image={`${process.env.PUBLIC_URL}/img/page/no-image.png`}
-            alt="サムネイル画像"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div" sx={{ fontFamily: "nicokaku" }}>
-              スターバックスコーヒー 松山市駅前店
-            </Typography>
-            <Typography variant="body2">
-              さすがのスターバックス！！いつも清潔に保たれています。さすがのスターバックス！！いつも清潔に保たれています。
-            </Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: "end" }}>
-            <Button size="small" onClick={() => handleClickOpenModal({id: 1234})}>
-              編集
-            </Button>
-            <Button size="small" onClick={() => handleClickDeletePost(1234)}>
-              削除
-            </Button>
-          </CardActions>
-        </Card>
+        {toiletList && toiletList.map((toiletItem)=>{
+          return(
+            <Card key={toiletItem.toilet_id} sx={{ margin: "15px" }}>
+              <CardMedia
+                component="img"
+                height="200"
+                image={`http://localhost:8000/storage/${toiletItem.toilet_image[0].image_url}`}
+                alt="サムネイル画像"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div" sx={{ fontFamily: "nicokaku" }}>
+                  {toiletItem.toilet_name}
+                </Typography>
+                <Typography variant="body2">
+                  {toiletItem.description}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: "end" }}>
+                <Button size="small" onClick={() => handleClickOpenModal({id: toiletItem.toilet_id})}>
+                  編集
+                </Button>
+                <Button size="small" onClick={() => handleClickDeletePost({id: toiletItem.toilet_id})}>
+                  削除
+                </Button>
+              </CardActions>
+            </Card>
+          )
+        }) }
       </main>
       <AdminFooter />
       <EditModal open={open} setOpen={setOpen}></EditModal>
