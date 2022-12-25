@@ -19,6 +19,7 @@ import {
 
 const ArchiveMain = () => {
   const [toiletList,setToiletList] = useState([]);
+  const [toiletItemDetail,setToiletItemDetail] = useState({});
   const [open,setOpen] = useState(false);
   const [alert,setAlert] = useState(false);
 
@@ -63,9 +64,17 @@ const ArchiveMain = () => {
     });
   };
 
-  const handleClickOpenModal = (data) => {
+  const handleClickOpenModal = async (toiletId) => {
+
+    toiletList.map(toiletItem => {
+      if(toiletId == toiletItem.toilet_id ){
+        console.log(toiletItem);
+        setToiletItemDetail(toiletItem);
+      }
+    });
+    
+    setTimeout(()=>{document.getElementById("toilet_name").focus();},1)
     setOpen(true);
-    console.log(data.id);
   }
 
   return (
@@ -92,10 +101,10 @@ const ArchiveMain = () => {
                 </Typography>
               </CardContent>
               <CardActions sx={{ justifyContent: "end" }}>
-                <Button size="small" onClick={() => handleClickOpenModal({id: toiletItem.toilet_id})}>
+                <Button size="small" onClick={() => handleClickOpenModal(toiletItem.toilet_id)}>
                   編集
                 </Button>
-                <Button size="small" onClick={() => handleClickDeletePost({id: toiletItem.toilet_id})}>
+                <Button size="small" onClick={() => handleClickDeletePost(toiletItem.toilet_id)}>
                   削除
                 </Button>
               </CardActions>
@@ -103,8 +112,8 @@ const ArchiveMain = () => {
           )
         }) }
       </main>
+      <EditModal open={open} setOpen={setOpen} toiletItemDetail={toiletItemDetail}></EditModal>
       <AdminFooter />
-      <EditModal open={open} setOpen={setOpen}></EditModal>
     </>
   );
 };
