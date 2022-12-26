@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Toilet;
 use App\Models\Toilet_image;
+use Carbon\Carbon;
 
 class Toilet extends Model
 {
@@ -34,6 +35,20 @@ class Toilet extends Model
 
     public function myToilet($admin_id){
         return Toilet::all()->where('admin_id','=',$admin_id)->whereNull('deleted_at');
+    }
+    
+    public function myPostToilet($admin_id){
+        return Toilet::with('toiletImage')
+        ->where('admin_id',$admin_id)
+        ->whereNull('deleted_at')
+        ->get();
+    }
+    
+    public function deleteToilet($request){
+        $toilet_id = $request->input('toilet_id');
+        $admin_id = session('admin_id');
+        Toilet::where('toilet_id', $toilet_id)->update(['deleted_at' => Carbon::now()]);
+        return $this->myPostToilet($admin_id);
     }
 
     public function toiletImage(){
