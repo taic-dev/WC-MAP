@@ -22,6 +22,7 @@ const ArchiveMain = () => {
   const [toiletItemDetail,setToiletItemDetail] = useState({});
   const [open,setOpen] = useState(false);
   const [alert,setAlert] = useState(false);
+  const ErrorSwal = withReactContent(Swal);
 
   const url = "/api/archive";
 
@@ -42,7 +43,7 @@ const ArchiveMain = () => {
 
   const ConfirmSwal = withReactContent(Swal);
 
-  const handleClickDeletePost = (id) => {
+  const handleClickDeletePost = (toiletId) => {
     ConfirmSwal.fire({
       title: "削除しますか？",
       icon: "warning",
@@ -53,16 +54,40 @@ const ArchiveMain = () => {
       cancelButtonColor: "#3085d6",
       confirmButtonText: "削除する",
     }).then((res) => {
-      console.log(res);
-      if (!res.isConfirmed)
-        return ConfirmSwal.fire({ title: "キャンセルしました" });
 
-      return ConfirmSwal.fire({
-        title: `${id}削除完了`,
-        icon: "success",
-      });
+      if (!res.isConfirmed) {
+        return ConfirmSwal.fire({ title: "キャンセルしました" });
+      }
+
+      const url = `/api/delete/id?toilet_id=${toiletId}`;
+
+      (async ()=> {
+        try{
+          const res = await axios.get(url);
+
+          if(!res.data){
+            return ErrorSwal.fire({
+              title: "削除に失敗しました",
+              icon: "error",
+            });
+          }
+
+          console.log(res.data.toiletInfo)
+          setToiletList(res.data.toiletInfo);
+
+          return ConfirmSwal.fire({
+            title: `削除完了`,
+            icon: "success",
+          });
+
+        }catch (e){
+          return e;
+        }
+      })();
     });
   };
+
+  console.log(toiletList);
 
   const handleClickOpenModal = async (toiletId) => {
 
@@ -83,7 +108,9 @@ const ArchiveMain = () => {
       <main className="main archive__main">
         {alert && <Alert severity="success" sx={{ position: "absolute", top: "-75px", left: "0", right: "0", maxWidth: "450px", margin: "auto 15px" }} > { alert } </Alert>}
         
-        {toiletList && toiletList.map((toiletItem)=>{
+        {toiletList.length == 0
+          ? <p style={{ textAlign: "center" }}>投稿されたトイレはありません。</p>
+          : toiletList.map((toiletItem)=>{
           return(
             <Card key={toiletItem.toilet_id} sx={{ margin: "15px" }}>
               <CardMedia

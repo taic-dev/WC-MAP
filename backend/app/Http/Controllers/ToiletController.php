@@ -70,12 +70,20 @@ class ToiletController extends Controller
             $toilet = new Toilet();
             $toilet_image = new Toilet_image();
             $admin_id = session('admin_id');
+            $my_post_toilet = $toilet->myPostToilet($admin_id);
+            return response()->json(["toiletInfo" => $my_post_toilet,"session" => session()->all()]);
+        }catch(\Exception $e){
+            return $e;
+        }
+    }
 
-            $my_post_toilet_image = Toilet::with('toiletImage')
-                                    ->where('admin_id',$admin_id)
-                                    ->whereNull('deleted_at')
-                                    ->get();
-            return response()->json(["toiletInfo" => $my_post_toilet_image,"session" => session()->all()]);
+    public function deleteToilet(Request $request)
+    {
+        try{
+            $toilet = new Toilet();
+            $admin_id = session('admin_id');
+            $my_post_toilet = $toilet->deleteToilet($request);
+            return response()->json(["toiletInfo" => $my_post_toilet]);
         }catch(\Exception $e){
             return $e;
         }
