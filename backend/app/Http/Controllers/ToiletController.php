@@ -88,4 +88,13 @@ class ToiletController extends Controller
             return $e;
         }
     }
+
+    public function updateToilet()
+    {
+        try{
+            
+        }catch(\Exception $e){
+            return $e;
+        }
+    }
 }
