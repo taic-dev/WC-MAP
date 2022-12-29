@@ -22,7 +22,6 @@ import CurrentLocationArea from "./CurrentLocationArea";
 import validation from "./validation";
 
 const EditModal = ({ open, setOpen, toiletItemDetail }) => {
-  const [images, setImages] = useState([]);
 
   const {
     register,
@@ -34,8 +33,8 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
   });
 
   const handleSubmitPostPage = async (data) => {
-    data.imageBase64 = images;
-    console.log(data);
+    // data.imageBase64 = images;
+    // console.log(data);
   };
 
   const handleClickCloseModal = () => {
@@ -100,8 +99,7 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
         <CurrentLocationArea register={register} toiletItemDetail={toiletItemDetail} errors={errors} />
         <MultipleImageUploadArea
           register={register}
-          images={images}
-          setImages={setImages}
+          toiletItemDetail={toiletItemDetail}
         />
         <TextField
           id="standard-select-currency"

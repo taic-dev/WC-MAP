@@ -30,7 +30,6 @@ const ArchiveMain = () => {
     (async ()=>{
       try{
         const res = await axios.get(url);
-        console.log(res.data.toiletInfo);
         setToiletList(res.data.toiletInfo);
         if(res.data.session.alert.success){
           setAlert(res.data.session.alert.success);
@@ -87,19 +86,16 @@ const ArchiveMain = () => {
     });
   };
 
-  console.log(toiletList);
-
   const handleClickOpenModal = async (toiletId) => {
 
     toiletList.map(toiletItem => {
       if(toiletId == toiletItem.toilet_id ){
-        console.log(toiletItem);
         setToiletItemDetail(toiletItem);
       }
     });
     
-    setTimeout(()=>{document.getElementById("toilet_name").focus();},1)
     setOpen(true);
+    setTimeout(()=>{document.getElementById("toilet_name").focus();},1)
   }
 
   return (
@@ -116,7 +112,7 @@ const ArchiveMain = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={`http://localhost:8000/storage/${toiletItem.toilet_image[0].image_url}`}
+                image={toiletItem.toilet_image[0].image_url}
                 alt="サムネイル画像"
               />
               <CardContent>
