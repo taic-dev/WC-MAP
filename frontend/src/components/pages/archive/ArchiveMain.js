@@ -20,6 +20,7 @@ import {
 const ArchiveMain = () => {
   const [toiletList,setToiletList] = useState([]);
   const [toiletItemDetail,setToiletItemDetail] = useState({});
+  const [images, setImages] = useState([]);
   const [open,setOpen] = useState(false);
   const [alert,setAlert] = useState(false);
   const ErrorSwal = withReactContent(Swal);
@@ -71,7 +72,6 @@ const ArchiveMain = () => {
             });
           }
 
-          console.log(res.data.toiletInfo)
           setToiletList(res.data.toiletInfo);
 
           return ConfirmSwal.fire({
@@ -91,12 +91,15 @@ const ArchiveMain = () => {
     toiletList.map(toiletItem => {
       if(toiletId == toiletItem.toilet_id ){
         setToiletItemDetail(toiletItem);
+        setImages(toiletItem.toilet_image);
       }
     });
     
     setOpen(true);
     setTimeout(()=>{document.getElementById("toilet_name").focus();},1)
   }
+
+  console.log(toiletList);
 
   return (
     <>
@@ -135,7 +138,15 @@ const ArchiveMain = () => {
           )
         }) }
       </main>
-      <EditModal open={open} setOpen={setOpen} toiletItemDetail={toiletItemDetail}></EditModal>
+      <EditModal 
+        open={open} 
+        setOpen={setOpen} 
+        toiletItemDetail={toiletItemDetail} 
+        setToiletItemDetail={setToiletItemDetail}
+        images={images} 
+        setImages={setImages}
+        setAlert={setAlert}
+        ></EditModal>
       <AdminFooter />
     </>
   );
