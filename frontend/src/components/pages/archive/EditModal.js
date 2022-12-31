@@ -20,8 +20,11 @@ import { useForm } from "react-hook-form";
 import MultipleImageUploadArea from "./MultipleImageUploadArea";
 import CurrentLocationArea from "./CurrentLocationArea";
 import validation from "./validation";
+import axios from "axios";
 
-const EditModal = ({ open, setOpen, toiletItemDetail }) => {
+const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, images, setImages, setAlert }) => {
+
+  console.log(validation());
 
   const {
     register,
@@ -32,14 +35,47 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
     criteriaMode: "all",
   });
 
+  const url = "/api/update"
+
   const handleSubmitPostPage = async (data) => {
-    // data.imageBase64 = images;
+    data.toilet_id = toiletItemDetail.toilet_id;
+    data.imageBase64 = images;
+
     // console.log(data);
+    // return;
+    (async ()=>{
+      try{
+        const res = await axios.post(url,data);
+        console.log(res);
+        if(res.data.session.alert.success){
+          setAlert(res.data.session.alert.success);
+        }
+        window.location.href="/archive";
+      }catch (e){
+        return e;
+      }
+    })();
   };
 
   const handleClickCloseModal = () => {
     setOpen(false);
   };
+
+  const handleChangeTextField = (e) => {
+    const value = e.target.value;
+    const id = e.target.id;
+    console.log(e.target.value);
+    console.log(e.target.id);
+    console.log(e.target);
+    console.log(toiletItemDetail)
+    if(e.target.id){
+      setToiletItemDetail({...toiletItemDetail, [e.target.id] : value});
+      return;
+    }
+    setToiletItemDetail({...toiletItemDetail, [e.target.name] : value});
+  }
+
+  console.log(errors);
 
   return (
     <Modal
@@ -95,14 +131,16 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           }
           error={errors.name && true}
           {...register("name", validation().name)}
+          onChange={(e) => handleChangeTextField(e)}
         />
         <CurrentLocationArea register={register} toiletItemDetail={toiletItemDetail} errors={errors} />
         <MultipleImageUploadArea
           register={register}
-          toiletItemDetail={toiletItemDetail}
+          images={images}
+          setImages={setImages}
         />
         <TextField
-          id="standard-select-currency"
+          id="price"
           label="料金"
           value={toiletItemDetail.price}
           variant="standard"
@@ -111,6 +149,7 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           helperText={errors.price?.types.required && errors.price.message}
           error={errors.price && true}
           {...register("price", validation().price)}
+          onChange={(e) => handleChangeTextField(e)}
         >
           <MenuItem key="" value="無料">
             無料
@@ -120,7 +159,7 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           </MenuItem>
         </TextField>
         <TextField
-          id="standard-select-currency"
+          id="cleanliness"
           label="清潔さ"
           value={toiletItemDetail.cleanliness}
           variant="standard"
@@ -128,7 +167,8 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           select
           helperText={errors.clean?.types.required && errors.clean.message}
           error={errors.clean && true}
-          {...register("clean", validation().clean)}
+          {...register("cleanliness", validation().clean)}
+          onChange={(e) => handleChangeTextField(e)}
         >
           <MenuItem key="" value="非常に綺麗">
             非常に綺麗
@@ -144,7 +184,7 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           </MenuItem>
         </TextField>
         <TextField
-          id="standard-select-currency"
+          id="is_multi_purpose_room"
           label="個室数"
           value={toiletItemDetail.private_room_num}
           variant="standard"
@@ -155,7 +195,8 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
             errors.privateRoomNum.message
           }
           error={errors.privateRoomNum && true}
-          {...register("privateRoomNum", validation().privateRoomNum)}
+          {...register("private_room_num", validation().privateRoomNum)}
+          onChange={(e) => handleChangeTextField(e)}
         >
           <MenuItem key="" value="1">
             1
@@ -181,20 +222,21 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           <RadioGroup
             aria-labelledby="private-room-type-group-label"
             defaultValue={toiletItemDetail.private_room_type}
-            name="private-room-type"
+            name="private_room_type"
             row
+            onChange={(e) => handleChangeTextField(e)}
           >
             <FormControlLabel
               value="和式"
               control={<Radio />}
               label="和式"
-              {...register("privateRoomType")}
+              {...register("private_room_type")}
             />
             <FormControlLabel
               value="洋式"
               control={<Radio />}
               label="洋式"
-              {...register("privateRoomType")}
+              {...register("private_room_type")}
             />
           </RadioGroup>
         </FormControl>
@@ -205,6 +247,7 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
             defaultValue={toiletItemDetail.is_washlet}
             name="washlet"
             row
+            onChange={(e) => handleChangeTextField(e)}
           >
             <FormControlLabel
               value="1"
@@ -225,25 +268,26 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           <RadioGroup
             aria-labelledby="multi-purpose-room-group-label"
             defaultValue={toiletItemDetail.is_multi_purpose_room}
-            name="multi-purpose-room"
+            name="multi_purpose_room"
             row
+            onChange={(e) => handleChangeTextField(e)}
           >
             <FormControlLabel
               value="1"
               control={<Radio />}
               label="あり"
-              {...register("multiPurposeRoom")}
+              {...register("multi_purpose_room")}
             />
             <FormControlLabel
               value="0"
               control={<Radio />}
               label="なし"
-              {...register("multiPurposeRoom")}
+              {...register("multi_purpose_room")}
             />
           </RadioGroup>
         </FormControl>
         <TextField
-          id="standard-required"
+          id="description"
           type="text"
           variant="standard"
           label="説明"
@@ -260,6 +304,7 @@ const EditModal = ({ open, setOpen, toiletItemDetail }) => {
           }
           error={errors.description && true}
           {...register("description", validation().description)}
+          onChange={(e) => handleChangeTextField(e)}
         />
         <Button
           variant="contained"

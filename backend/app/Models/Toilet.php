@@ -39,9 +39,25 @@ class Toilet extends Model
     
     public function myPostToilet($admin_id){
         return Toilet::with('toiletImage')
-        ->where('admin_id',$admin_id)
         ->whereNull('deleted_at')
+        ->where('admin_id',$admin_id)
         ->get();
+    }
+
+    public function updateToilet($request)
+    {
+        Toilet::where('toilet_id', $request->input('toilet_id'))->update([
+            'toilet_name' => $request->input('name'),
+            'latitude' => $request->input('lat'),
+            'longitude' => $request->input('lng'),
+            'price' => $request->input('price'),
+            'cleanliness' => $request->input('cleanliness'),
+            'private_room_num' => $request->input('private_room_num'),
+            'private_room_type' => $request->input('private_room_type'),
+            'is_washlet' => $request->input('washlet'),
+            'is_multi_purpose_room' => $request->input('multi_purpose_room'),
+            'description' => $request->input('description')
+        ]);
     }
     
     public function deleteToilet($request){
