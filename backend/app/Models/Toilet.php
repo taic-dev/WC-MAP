@@ -68,7 +68,7 @@ class Toilet extends Model
     }
 
     public function toiletImage(){
-        return $this->hasMany(Toilet_image::class,'toilet_id','toilet_id');
+        return $this->hasMany(Toilet_image::class,'toilet_id','toilet_id')->whereNull('deleted_at');
     }
 
 }
