@@ -25,7 +25,7 @@ class Toilet_image extends Model
             $toilet_image_array[$i]["created_at"] = now();
             $toilet_image_array[$i]["updated_at"] = now();
         }
-        
+
         return DB::table('toilet_images')->insert($toilet_image_array);
     }
 

@@ -25,7 +25,7 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
     }
     const files = e.target.files;
     const Base64 = await getBase64(files[files.length - 1]);
-    setImages([...images, { id: UUID, src: Base64 }]);
+    setImages([...images, { id: UUID, image_url: Base64 }]);
   };
 
   const getBase64 = (file) => {
@@ -49,7 +49,7 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
           return (
             <div key={image.id} className="post__image">
               <CancelIcon onClick={() => handleOnRemoveImage(image.id)} />
-              <img src={image.src} alt="アップロード画像" />
+              <img src={image.image_url} alt="アップロード画像" />
             </div>
           );
         })) : (
