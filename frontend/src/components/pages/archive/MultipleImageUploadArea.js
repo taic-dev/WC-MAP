@@ -6,10 +6,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const MultipleImageUpload = ({ register, toiletItemDetail }) => {
-
-  const [images, setImages] = useState(toiletItemDetail.toilet_image);
-  console.log(images)
+const MultipleImageUpload = ({ register, images, setImages }) => {
 
   const ErrorSwal = withReactContent(Swal);
   const maxImagesUpload = 4;
