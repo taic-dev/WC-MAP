@@ -116,7 +116,11 @@ const ArchiveMain = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={toiletItem.toilet_image[0].image_url}
+                image={
+                  toiletItem.toilet_image.length > 0 ?
+                  toiletItem.toilet_image[0].image_url :
+                  `${process.env.PUBLIC_URL}/img/page/no-image.png`
+                }
                 alt="サムネイル画像"
               />
               <CardContent>
