@@ -19,7 +19,7 @@ class UpdateImageClass
                     continue;
                 }
                 
-                list($file_info,$file_data) = explode(";",$image_base64_array[$i]['src']);
+                list($file_info,$file_data) = explode(";",$image_base64_array[$i]['image_url']);
                 $extension = explode('/', $file_info)[1];
                 list(, $file_data) = explode(',', $file_data);
                 $file_data = base64_decode($file_data);
