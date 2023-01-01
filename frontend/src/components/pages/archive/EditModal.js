@@ -21,9 +21,11 @@ import MultipleImageUploadArea from "./MultipleImageUploadArea";
 import CurrentLocationArea from "./CurrentLocationArea";
 import validation from "./validation";
 import axios from "axios";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, images, setImages, setAlert }) => {
 
+  const [loading,setLoading] = useState(false);
   
   const {
     register,
@@ -38,19 +40,22 @@ const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, image
   const url = "/api/update"
 
   const handleSubmitPostPage = async (data) => {
+    setLoading(true);
     data.toilet_id = toiletItemDetail.toilet_id;
     data.imageBase64 = images;
 
     (async ()=>{
       try{
         const res = await axios.post(url,data);
-        console.log(res);
+
         if(res.data.session.alert.success){
           setAlert(res.data.session.alert.success);
+          setLoading(false);
         }
+        setLoading(false);
         window.location.href="/archive";
       }catch (e){
-        return e;
+        setLoading(false);
       }
     })();
   };
@@ -298,15 +303,21 @@ const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, image
           {...register("description", validation().description)}
           onChange={(e) => handleChangeTextField(e)}
         />
+        {loading ? (
+          <LoadingButton loading variant="outlined" sx={{ width: "70%", marginBottom: "50px" }}>
+            更新中...
+          </LoadingButton>
+        ) : (
         <Button
           variant="contained"
           type="submit"
           endIcon={<SendIcon />}
-          style={{ marginBottom: "50px" }}
+          style={{ width: "70%", marginBottom: "50px" }}
           // disabled={!isDirty || !isValid}
         >
-          確認画面へ
+          更新
         </Button>
+        )}
       </Box>
     </Modal>
   );
