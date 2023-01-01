@@ -24,25 +24,23 @@ import axios from "axios";
 
 const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, images, setImages, setAlert }) => {
 
-  console.log(validation());
-
+  
   const {
     register,
     handleSubmit,
     formState: { isValid, isDirty, errors },
   } = useForm({
-    mode: "onChange",
+    mode: 'onSubmit',
     criteriaMode: "all",
   });
-
+  
+  console.log(errors);
   const url = "/api/update"
 
   const handleSubmitPostPage = async (data) => {
     data.toilet_id = toiletItemDetail.toilet_id;
     data.imageBase64 = images;
 
-    // console.log(data);
-    // return;
     (async ()=>{
       try{
         const res = await axios.post(url,data);
@@ -62,17 +60,11 @@ const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, image
   };
 
   const handleChangeTextField = (e) => {
-    const value = e.target.value;
-    const id = e.target.id;
-    console.log(e.target.value);
-    console.log(e.target.id);
-    console.log(e.target);
-    console.log(toiletItemDetail)
     if(e.target.id){
-      setToiletItemDetail({...toiletItemDetail, [e.target.id] : value});
+      setToiletItemDetail({...toiletItemDetail, [e.target.id] : e.target.value});
       return;
     }
-    setToiletItemDetail({...toiletItemDetail, [e.target.name] : value});
+    setToiletItemDetail({...toiletItemDetail, [e.target.name] : e.target.value});
   }
 
   console.log(errors);
@@ -311,7 +303,7 @@ const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, image
           type="submit"
           endIcon={<SendIcon />}
           style={{ marginBottom: "50px" }}
-          disabled={!isDirty || !isValid}
+          // disabled={!isDirty || !isValid}
         >
           確認画面へ
         </Button>
