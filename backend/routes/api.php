@@ -22,4 +22,6 @@ Route::group(['middleware' => ['api','cors']], function(){
     Route::post('post',[ToiletController::class, 'addToilet']);
     Route::get('admin',[ToiletController::class, 'getToiletNum']);
     Route::get('archive',[ToiletController::class, 'getToiletList']);
+    Route::get('delete/{id}',[ToiletController::class, 'deleteToilet']);
+    Route::post('update',[ToiletController::class, 'updateToilet']);
 });

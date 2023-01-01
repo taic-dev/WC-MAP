@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Toilet;
+use App\Models\Toilet_image;
+use Carbon\Carbon;
 
 class Toilet extends Model
 {
@@ -33,4 +36,39 @@ class Toilet extends Model
     public function myToilet($admin_id){
         return Toilet::all()->where('admin_id','=',$admin_id)->whereNull('deleted_at');
     }
+    
+    public function myPostToilet($admin_id){
+        return Toilet::with('toiletImage')
+        ->orderBy('id', 'desc')
+        ->where('admin_id',$admin_id)
+        ->get();
+    }
+
+    public function updateToilet($request)
+    {
+        Toilet::where('toilet_id', $request->input('toilet_id'))->update([
+            'toilet_name' => $request->input('name'),
+            'latitude' => $request->input('lat'),
+            'longitude' => $request->input('lng'),
+            'price' => $request->input('price'),
+            'cleanliness' => $request->input('cleanliness'),
+            'private_room_num' => $request->input('private_room_num'),
+            'private_room_type' => $request->input('private_room_type'),
+            'is_washlet' => $request->input('washlet'),
+            'is_multi_purpose_room' => $request->input('multi_purpose_room'),
+            'description' => $request->input('description')
+        ]);
+    }
+    
+    public function deleteToilet($request){
+        $toilet_id = $request->input('toilet_id');
+        $admin_id = session('admin_id');
+        Toilet::where('toilet_id', $toilet_id)->update(['deleted_at' => Carbon::now()]);
+        return $this->myPostToilet($admin_id);
+    }
+
+    public function toiletImage(){
+        return $this->hasMany(Toilet_image::class,'toilet_id','toilet_id')->whereNull('deleted_at');
+    }
+
 }
