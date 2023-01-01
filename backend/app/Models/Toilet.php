@@ -39,7 +39,7 @@ class Toilet extends Model
     
     public function myPostToilet($admin_id){
         return Toilet::with('toiletImage')
-        ->whereNull('deleted_at')
+        ->orderBy('id', 'desc')
         ->where('admin_id',$admin_id)
         ->get();
     }
