@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { Button } from "@mui/material";
 import { createUuid } from "../../templates/common/createUuid";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 const MultipleImageUpload = ({ register, images, setImages }) => {
+
   const ErrorSwal = withReactContent(Swal);
   const maxImagesUpload = 4;
   const inputId = Math.random().toString(32).substring(2);
@@ -15,17 +16,17 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
   const handleOnAddImage = async (e) => {
     if (!e.target || !e.target.files) return;
     console.log(e.target.files);
-    // 10MB以上だったら 
-    if (e.target.files[0].size >= 10485760){
+    // 5MB以上だったら 
+    if (e.target.files[0].size >= 5242880){
       ErrorSwal.fire({
-        title: "10MB以下の画像を選択してください",
+        title: "5MB以下の画像を選択してください",
         icon: "error",
       })
       return;
     }
     const files = e.target.files;
     const Base64 = await getBase64(files[files.length - 1]);
-    setImages([...images, { id: UUID, src: Base64 }]);
+    setImages([...images, { id: UUID, image_url: Base64 }]);
   };
 
   const getBase64 = (file) => {
@@ -49,7 +50,7 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
           return (
             <div key={image.id} className="post__image">
               <CancelIcon onClick={() => handleOnRemoveImage(image.id)} />
-              <img src={image.src} alt="アップロード画像" />
+              <img src={image.image_url} alt="アップロード画像" />
             </div>
           );
         })) : (
@@ -90,7 +91,7 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
           }
           }
         />
-        <p style={{ fontSize: "13px", marginTop: "15px" }}>※10MB以下の画像を選択してください。</p>
+        <p style={{ fontSize: "13px", marginTop: "15px" }}>※5MB以下の画像を選択してください。</p>
       </label>
     </>
   );

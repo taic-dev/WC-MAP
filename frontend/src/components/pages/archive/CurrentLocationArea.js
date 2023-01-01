@@ -5,9 +5,9 @@ import getCurrentLocation from "../../templates/common/getCurrentLocation";
 import LoadingButton from "@mui/lab/LoadingButton";
 import validation from "./validation";
 
-const CurrentLocationArea = ({ register, errors}) => {
+const CurrentLocationArea = ({ register, toiletItemDetail, errors}) => {
   const [loading, setLoading] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState({ lat: "", lng: "" });
+  const [currentLocation, setCurrentLocation] = useState({ lat: toiletItemDetail.latitude, lng: toiletItemDetail.longitude});
 
   const handleOnAddCurrentLocation = async () => {
     setLoading(true);

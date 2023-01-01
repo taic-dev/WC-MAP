@@ -67,7 +67,52 @@ class ToiletController extends Controller
     public function getToiletList()
     {
         try{
-            return ["session" => session()->all()];
+            $toilet = new Toilet();
+            $toilet_image = new Toilet_image();
+            $admin_id = session('admin_id');
+            $my_post_toilet = $toilet->myPostToilet($admin_id);
+            return response()->json(["toiletInfo" => $my_post_toilet,"session" => session()->all()]);
+        }catch(\Exception $e){
+            return $e;
+        }
+    }
+
+    public function deleteToilet(Request $request)
+    {
+        try{
+            $toilet = new Toilet();
+            $admin_id = session('admin_id');
+            $my_post_toilet = $toilet->deleteToilet($request);
+            return response()->json(["toiletInfo" => $my_post_toilet]);
+        }catch(\Exception $e){
+            return $e;
+        }
+    }
+
+    public function updateToilet(Request $request)
+    {
+        try{
+            $toilet = new Toilet();
+            $toilet_image = new Toilet_image();
+            $toilet_image->deleteImages($request->toilet_id);
+
+            if(empty($request->imageBase64)){
+                session()->flash('alert', ["success" => "登録が完了しました"]);
+                return response()->json([
+                    "success" => "登録が完了しました",
+                    "session" => session()->all()
+                ]);
+                exit;
+            }
+
+            $image_array = UpdateImageClass::UpdateImage($request);
+            $toilet->updateToilet($request);
+            $debug = $toilet_image->insert($request, $image_array);
+            session()->flash('alert', ["success" => "編集が完了しました"]);
+            return response()->json([
+                "success" => "編集が完了しました",
+                "session" => session()->all()
+            ]);
         }catch(\Exception $e){
             return $e;
         }
