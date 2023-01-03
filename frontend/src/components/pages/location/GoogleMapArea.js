@@ -10,9 +10,9 @@ const GoogleMapArea = ({ currentLocation,children }) => {
     height: "100%",
     width: "100%",
   };
-
+  
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyD7Tvp_twEILZF9ia8LxblM4J02J1qGv3U",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
   });
 
   if (!isLoaded) return <div>Loading...</div>;
