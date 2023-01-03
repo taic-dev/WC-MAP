@@ -1,153 +1,27 @@
 import { Rating } from "@mui/material";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import InfoArea from "../../pages/location/InfoArea";
 
 const MarkerList = ({ setInfoArea }) => {
   const [activeMarker, setActiveMarker] = useState(false);
+  const [markerInfo, setMarkerInfo] = useState([]);
 
-  const getMarkerInfo = [
-    {
-      id: 1,
-      name: "トイレ1",
-      review: 4,
-      location: {
-        lat: 35.69731,
-        lng: 139.7747,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "無料",
-          clean: "非常に綺麗",
-          time: "10:00~22:00",
-          num: "2",
-          type: "洋式",
-          water: "あり",
-          multipurpose: "あり",
-          desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "トイレ2",
-      review: 4,
-      location: {
-        lat: 35.69575,
-        lng: 139.77521,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "無料",
-          clean: "非常に綺麗",
-          time: "10:00~22:00",
-          num: "2",
-          type: "洋式",
-          water: "あり",
-          multipurpose: "あり",
-          desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3",
-      review: 3,
-      location: {
-        lat: 33.8315492,
-        lng: 132.754934,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "無料",
-          clean: "非常に綺麗",
-          time: "10:00~22:00",
-          num: "2",
-          type: "和式",
-          water: "あり",
-          multipurpose: "あり",
-          desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "スターバックスコーヒー 松山市駅前店",
-      review: 5,
-      location: {
-        lat: 33.8356102,
-        lng: 132.7640894,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "有料",
-          clean: "非常に綺麗",
-          time: "10:00~21:00",
-          num: "1",
-          type: "洋式",
-          water: "あり",
-          multipurpose: "なし",
-          desc: "さすがのスターバックス！！いつも清潔に保たれています。",
-        },
-      ],
-    },
-  ];
+  const url = "/api/all";
+
+  useEffect(()=>{
+    (async ()=>{
+      try{
+        const res = await axios.get(url);
+        console.log(res);
+        setMarkerInfo(res.data);
+
+      }catch(e){
+        return e;
+      }
+    })();
+  },[]);
 
   const handleActiveMarker = (id) => {
     setActiveMarker(id);
@@ -155,41 +29,37 @@ const MarkerList = ({ setInfoArea }) => {
 
   return (
     <>
-      {getMarkerInfo.map((getMarker) => (
+      {markerInfo.map((marker) => (
         <>
           <Marker
-            key={getMarker.name}
-            position={getMarker.location}
-            onClick={() => handleActiveMarker(getMarker.id)}
+            key={marker.toilet_id}
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            onClick={() => handleActiveMarker(marker.toilet_id)}
           />
 
-          {activeMarker === getMarker.id ? (
+          {activeMarker === marker.toilet_id ? (
             <>
               <InfoWindow
-                position={getMarker.location}
+                position={{ lat: marker.latitude, lng: marker.longitude }}
                 onCloseClick={() => setActiveMarker(false)}
               >
                 <div>
-                  <h1 style={{ fontSize: "18px" }} className="common__font-family">{getMarker.name}</h1>
+                  <h1 style={{ fontSize: "18px" }} className="common__font-family">{marker.toilet_name}</h1>
                   <div className="info-window__review">
-                    <span>{getMarker.review}</span>
-                    <Rating
+                    {/* <span>{marker.review}</span> */}
+                    {/* <Rating
                       name="read-only"
-                      value={getMarker.review}
+                      value={marker.review}
                       size="small"
                       readOnly
                     />
-                    <span>(21)</span>
+                    <span>(21)</span> */}
                   </div>
                 </div>
               </InfoWindow>
 
               <InfoArea
-                name={getMarker.name}
-                review={getMarker.review}
-                location={getMarker.location}
-                images={getMarker.images}
-                detail={getMarker.detail}
+                marker={marker}
                 handleActiveMarker={handleActiveMarker}
               />
             </>
