@@ -29,8 +29,10 @@ class Toilet extends Model
         return $this->save();
     }
 
-    public function allToilet($admin_id){
-        return Toilet::all()->whereNull('deleted_at');
+    public function allToilet(){
+        return Toilet::with('toiletImage')
+        ->orderBy('id', 'desc')
+        ->get();
     }
 
     public function myToilet($admin_id){

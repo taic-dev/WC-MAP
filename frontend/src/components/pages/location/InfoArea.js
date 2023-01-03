@@ -26,16 +26,12 @@ import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
 
 const InfoArea = ({
-  name,
-  review,
-  location,
-  images,
-  detail,
+  marker,
   handleActiveMarker
 }) => {
   const [descOpen, setDescOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
-  const GoogleMapURL = "https://www.google.co.jp/maps?q=";
+  const GoogleMapURL = "https://www.google.com/maps/dir/?api=1&destination=";
 
   const descClick = () => setDescOpen(!descOpen);
   const commentClick = () => setCommentOpen(!commentOpen);
@@ -56,24 +52,42 @@ const InfoArea = ({
               onClick={() => handleActiveMarker(false)} 
             />
           <div className="info-area__title">
-            <h1 className="common__font-family">{name}</h1>
+            <h1 className="common__font-family">{marker.toilet_name}</h1>
           </div>
-          <div className="info-area__review">
+          {/* <div className="info-area__review">
             <span>{review}</span>
             <Rating name="read-only" value={review} size="small" readOnly />
             <span>(21)</span>
-          </div>
-          <div className="info-area__link">
-            <a href={GoogleMapURL + `${location.lat},${location.lng}`}>
-              Googleマップで見る
-            </a>
-          </div>
+          </div> */}
+          <ul className="info-area__link">
+            <li>
+              <a href={GoogleMapURL + `${ marker.latitude },${ marker.longitude }`} target="_blank" rel="noopener noreferrer">
+                <img src={`${process.env.PUBLIC_URL}/img/page/google-maps-icons.svg`} alt="GoogleMap" />
+                <span>GoogleMapへ</span>
+              </a>
+            </li>
+            <li>
+              <a href={`https://twitter.com/share?url=${process.env.REACT_APP_URL}&hashtags=WCMAP,お腹のゆるい人と繋がりたい&text=さぁ、近場のトイレを探そう！｜全国のトイレを検索できるW.C.MAP`} 
+                rel="nofollow" 
+                target="_blank"
+                >
+                <img src={`${process.env.PUBLIC_URL}/img/page/twitter.svg`} alt="GoogleMap" />
+                <span>シェアする</span>
+              </a>
+            </li>
+          </ul>
           <ul className="info-area__img">
-            {images.map((img) => (
-              <li>
-                <img src={img.src} alt="画像" />
-              </li>
-            ))}
+            { marker.toilet_image.length != 0 ? (
+              marker.toilet_image.map((image) => (
+                <li>
+                  <img src={image.image_url} alt="画像" />
+                </li>
+              ))
+            ) : (
+                <li>
+                  <img src={`${process.env.PUBLIC_URL}/img/page/no-image.png`} alt="画像なし" />
+                </li>
+            ) }
           </ul>
           <div className="info-area__detail">
             <List>
@@ -81,43 +95,37 @@ const InfoArea = ({
                 <ListItemIcon>
                   <CurrencyYenIcon />
                 </ListItemIcon>
-                <ListItemText primary={detail[0].price} />
+                <ListItemText primary={marker.price} />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <AutoAwesomeIcon />
                 </ListItemIcon>
-                <ListItemText primary={detail[0].clean} />
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <AccessTimeIcon />
-                </ListItemIcon>
-                <ListItemText primary={detail[0].time} />
+                <ListItemText primary={marker.cleanliness} />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <FontAwesomeIcon icon={faToiletsPortable} />
                 </ListItemIcon>
-                <ListItemText primary={`${detail[0].num}室`} />
+                <ListItemText primary={`${ marker.private_room_num }室`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <FontAwesomeIcon style={{ width: "20px" }} icon={faToilet} />
                 </ListItemIcon>
-                <ListItemText primary={detail[0].type} />
+                <ListItemText primary={ marker.private_room_type } />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <FontAwesomeIcon style={{ width: "20px" }} icon={faDroplet} />
                 </ListItemIcon>
-                <ListItemText primary={`ウオシュレット ${detail[0].water}`} />
+                <ListItemText primary={ `ウオシュレット ${ marker.is_washlet == 0 ? 'なし' : 'あり'}` } />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <AccessibleIcon />
                 </ListItemIcon>
-                <ListItemText primary={`多目的室 ${detail[0].multipurpose}`} />
+                <ListItemText primary={`多目的室 ${ marker.is_multi_purpose_room == 0 ? 'なし' : 'あり' }`} />
               </ListItem>
             </List>
             <ListItemButton onClick={descClick}>
@@ -129,11 +137,11 @@ const InfoArea = ({
             </ListItemButton>
             <Collapse in={descOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemText primary={detail[0].desc} />
+                <ListItemText primary={ marker.description } />
               </List>
             </Collapse>
 
-            <ListItemButton onClick={commentClick}>
+            {/* <ListItemButton onClick={commentClick}>
               <ListItemIcon>
                 <SpeakerNotesIcon />
               </ListItemIcon>
@@ -144,7 +152,8 @@ const InfoArea = ({
               <List component="div" disablePadding>
                 <ListItemText primary={detail[0].desc} />
               </List>
-            </Collapse>
+            </Collapse> */}
+
           </div>
         </div>
       </Resizable>

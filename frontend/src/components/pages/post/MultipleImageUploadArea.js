@@ -15,10 +15,10 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
   const handleOnAddImage = async (e) => {
     if (!e.target || !e.target.files) return;
     console.log(e.target.files);
-    // 10MB以上だったら 
-    if (e.target.files[0].size >= 10485760){
+    // 5MB以上だったら 
+    if (e.target.files[0].size >= 5242880){
       ErrorSwal.fire({
-        title: "10MB以下の画像を選択してください",
+        title: "5MB以下の画像を選択してください",
         icon: "error",
       })
       return;
@@ -90,7 +90,7 @@ const MultipleImageUpload = ({ register, images, setImages }) => {
           }
           }
         />
-        <p style={{ fontSize: "13px", marginTop: "15px" }}>※10MB以下の画像を選択してください。</p>
+        <p style={{ fontSize: "13px", marginTop: "15px" }}>※5MB以下の画像を選択してください。</p>
       </label>
     </>
   );
