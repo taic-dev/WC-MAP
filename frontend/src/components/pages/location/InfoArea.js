@@ -36,7 +36,7 @@ const InfoArea = ({
   const descClick = () => setDescOpen(!descOpen);
   const commentClick = () => setCommentOpen(!commentOpen);
 
-  return (
+  return (    
     <div className="info-area__wrapper">
       <Resizable
         style={{ maxHeight: "95vh" }}
@@ -79,12 +79,12 @@ const InfoArea = ({
           <ul className="info-area__img">
             { marker.toilet_image.length != 0 ? (
               marker.toilet_image.map((image) => (
-                <li>
+                <li key={image.id}>
                   <img src={image.image_url} alt="画像" />
                 </li>
               ))
             ) : (
-                <li>
+                <li key="1">
                   <img src={`${process.env.PUBLIC_URL}/img/page/no-image.png`} alt="画像なし" />
                 </li>
             ) }
