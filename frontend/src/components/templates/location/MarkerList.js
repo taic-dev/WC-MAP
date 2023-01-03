@@ -14,7 +14,6 @@ const MarkerList = ({ setInfoArea }) => {
     (async ()=>{
       try{
         const res = await axios.get(url);
-        console.log(res);
         setMarkerInfo(res.data);
 
       }catch(e){
@@ -30,9 +29,9 @@ const MarkerList = ({ setInfoArea }) => {
   return (
     <>
       {markerInfo.map((marker) => (
-        <>
+        <React.Fragment key={marker.toilet_id}>
           <Marker
-            key={marker.toilet_id}
+            key={`Marker-${marker.toilet_id}`}
             position={{ lat: marker.latitude, lng: marker.longitude }}
             onClick={() => handleActiveMarker(marker.toilet_id)}
           />
@@ -40,6 +39,7 @@ const MarkerList = ({ setInfoArea }) => {
           {activeMarker === marker.toilet_id ? (
             <>
               <InfoWindow
+                key={`InfoWindow-${marker.toilet_id}`}
                 position={{ lat: marker.latitude, lng: marker.longitude }}
                 onCloseClick={() => setActiveMarker(false)}
               >
@@ -64,7 +64,7 @@ const MarkerList = ({ setInfoArea }) => {
               />
             </>
           ) : null}
-        </>
+        </ React.Fragment>
       ))}
     </>
   );
