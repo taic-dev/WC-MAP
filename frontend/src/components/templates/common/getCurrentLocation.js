@@ -13,7 +13,6 @@ const getCurrentLocation = () => {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        console.log(coordinate);
         resolve(coordinate);
       },
       (error) => {
