@@ -34,19 +34,24 @@ const LoginMain = () => {
 
     // 情報の受け渡し
     try {
-      const res = await axios.post(url, data);
-      console.log(res);
-
-      if(res.data.error){
-        setError({ alert: res.data.error })
-        setLoading(false);
-        return;
-      }
-      // stateの更新
-      // 入力内容に間違いなかったら以下を処理する
-      dispatch({ type: "SUCCESS" });
-      localStorageObj.setLocalStorage();
-      setLoading(false);
+      axios.get("/sanctum/csrf-cookie",{ withCredentials: true }).then((response) => {
+        (async ()=>{
+          const res = await axios.post(url, data);
+          console.log(res);
+    
+          if(res.data.error){
+            setError({ alert: res.data.error })
+            setLoading(false);
+            return;
+          }
+          // stateの更新
+          // 入力内容に間違いなかったら以下を処理する
+          dispatch({ type: "SUCCESS" });
+          localStorageObj.setLocalStorage();
+          setLoading(false);
+          // window.location.href="/admin"
+        })();
+      });
     } catch (e) {
       setLoading(false);
       setError({ alert: "ログイン失敗" });
