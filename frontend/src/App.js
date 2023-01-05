@@ -30,19 +30,23 @@ const App = () => {
           <Route path={"/signup"} element={<SignupMain />} />
           <Route
             path={"/login"}
-            element={ stateAuth || localStrageAuth ? <Navigate to="/admin" /> : <LoginMain />}
+            // element={ stateAuth || localStrageAuth ? <Navigate to="/admin" /> : <LoginMain />}
+            element={ <LoginMain /> }
           />
           <Route
             path={"/admin"}
-            element={ stateAuth || localStrageAuth ? <AdminMain /> : <Navigate to="/login" />}
+            // element={ stateAuth || localStrageAuth ? <AdminMain /> : <Navigate to="/login" />}
+            element={ <AdminMain /> }
           />
           <Route
             path={"/post"}
-            element={ stateAuth || localStrageAuth ? <PostMain /> : <Navigate to="/login" />}
+            // element={ stateAuth || localStrageAuth ? <PostMain /> : <Navigate to="/login" />}
+            element={ <PostMain /> }
           />
           <Route
             path={"/archive"}
-            element={ stateAuth || localStrageAuth ? <ArchiveMain /> : <Navigate to="/login" />}
+            // element={ stateAuth || localStrageAuth ? <ArchiveMain /> : <Navigate to="/login" />}
+            element={ <ArchiveMain /> }
           />
         </Routes>
       </BrowserRouter>

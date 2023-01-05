@@ -19,10 +19,13 @@ use App\Http\Controllers\ToiletController;
 Route::group(['middleware' => ['api','cors']], function(){
     Route::post('signup',[AdminController::class, 'signUp']);
     Route::post('login',[AdminController::class, 'logIn']);
-    Route::post('post',[ToiletController::class, 'addToilet']);
-    Route::get('admin',[ToiletController::class, 'getToiletNum']);
     Route::get('all',[ToiletController::class, 'getAllToiletList']);
-    Route::get('archive',[ToiletController::class, 'getToiletList']);
-    Route::get('delete/{id}',[ToiletController::class, 'deleteToilet']);
-    Route::post('update',[ToiletController::class, 'updateToilet']);
+
+    Route::group(["middleware" => ["auth:sanctum"]], function () {
+        Route::post('post',[ToiletController::class, 'addToilet']);
+        Route::get('admin',[ToiletController::class, 'getToiletNum']);
+        Route::get('archive',[ToiletController::class, 'getToiletList']);
+        Route::get('delete/{id}',[ToiletController::class, 'deleteToilet']);
+        Route::post('update',[ToiletController::class, 'updateToilet']);
+    });
 });
