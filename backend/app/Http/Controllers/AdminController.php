@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function sessionCheck(Request $request)
+    {
+        return $request->session()->has('admin_id');
+    }
+
     public function signUp(Request $request)
     {
         try{
