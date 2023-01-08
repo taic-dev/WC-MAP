@@ -61,4 +61,12 @@ class AdminController extends Controller
             return ["error" => "情報が正しくありません"];
         }
     }
+
+    public function logOut(Request $request)
+    {
+        $request->session()->flush();
+        if(!$request->session()->has('admin_id')){
+            return response()->json(["success" => "Logoutが完了しました"]);
+        }
+    }
 }
