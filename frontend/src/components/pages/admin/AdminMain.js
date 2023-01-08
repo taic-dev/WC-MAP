@@ -17,13 +17,17 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 // components
 import Header from "../common/Header";
 import AdminFooter from "../common/AdminFooter";
 
 const AdminMain = () => {
   const [toiletInfo, setToiletInfo] = useState([]);
-  const auth = useSelector((state) => state.auth);
+  const ConfirmSwal = withReactContent(Swal);
+
   const url = "/api/admin";
 
   useEffect(() => {
@@ -38,7 +42,24 @@ const AdminMain = () => {
     })();
   }, []);
 
-  const handleClickLogoutButton = () => {};
+  const handleClickLogoutButton = () => {
+    ConfirmSwal.fire({
+      title: "ログアウトしますか？",
+      icon: "warning",
+      text: "管理者ページを閲覧するには再度ログインが必要です。",
+      allowOutsideClick: false,
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Logout",
+    }).then((res) => {
+      if (!res.isConfirmed) {
+        return ConfirmSwal.fire({ title: "キャンセルしました" });
+      }
+
+      // const url = '/api/logout';
+    });
+  };
 
   return (
     <>
