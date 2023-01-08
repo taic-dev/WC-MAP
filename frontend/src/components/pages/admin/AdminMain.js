@@ -14,7 +14,6 @@ import { faToilet } from "@fortawesome/free-solid-svg-icons";
 import WcIcon from "@mui/icons-material/Wc";
 import LogoutIcon from "@mui/icons-material/Logout";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import axios from "axios";
 
 import Swal from "sweetalert2";
@@ -57,7 +56,25 @@ const AdminMain = () => {
         return ConfirmSwal.fire({ title: "キャンセルしました" });
       }
 
-      // const url = '/api/logout';
+      const url = '/api/logout';
+      
+      (async ()=> {
+        try{
+          const res = await axios.get(url);
+
+          if(!res.data){
+            return ConfirmSwal.fire({
+              title: "ログアウトに失敗しました",
+              icon: "error",
+            });
+          }
+
+          window.location.href='/login';
+
+        }catch(e){
+          return e;
+        }
+      })();
     });
   };
 
