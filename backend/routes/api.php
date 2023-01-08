@@ -17,6 +17,7 @@ use App\Http\Controllers\ToiletController;
 */
 
 Route::group(['middleware' => ['api','cors']], function(){
+    Route::get('session-check',[AdminController::class, 'sessionCheck']);
     Route::post('signup',[AdminController::class, 'signUp']);
     Route::post('login',[AdminController::class, 'logIn']);
     Route::post('post',[ToiletController::class, 'addToilet']);

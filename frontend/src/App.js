@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { Reset } from "styled-reset";
-import { useSelector } from "react-redux";
 
 // react-router-dom
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -13,39 +12,30 @@ import SignupMain from "./components/pages/signup/SignupMain";
 import AdminMain from "./components/pages/admin/AdminMain";
 import PostMain from "./components/pages/post/PostMain";
 import ArchiveMain from "./components/pages/archive/ArchiveMain";
-import { localStorageObj } from "./components/templates/common/localStrage";
+import { useAuth } from "./components/hooks/useAuth"; 
+import Loading from "./components/pages/location/Loading";
 
 const App = () => {
-  // state取得
-  const stateAuth = useSelector((state) => state.auth);
-  // ローカルストレージ取得
-  const localStrageAuth = localStorageObj.getLocalStorage();
 
+  const auth = useAuth();
+  
   return (
     <>
-      <Reset />
-      <BrowserRouter>
-        <Routes>
-          <Route path={"/"} element={<LocationMain />} />
-          <Route path={"/signup"} element={<SignupMain />} />
-          <Route
-            path={"/login"}
-            element={ stateAuth || localStrageAuth ? <Navigate to="/admin" /> : <LoginMain />}
-          />
-          <Route
-            path={"/admin"}
-            element={ stateAuth || localStrageAuth ? <AdminMain /> : <Navigate to="/login" />}
-          />
-          <Route
-            path={"/post"}
-            element={ stateAuth || localStrageAuth ? <PostMain /> : <Navigate to="/login" />}
-          />
-          <Route
-            path={"/archive"}
-            element={ stateAuth || localStrageAuth ? <ArchiveMain /> : <Navigate to="/login" />}
-          />
-        </Routes>
-      </BrowserRouter>
+    { auth === false ? <Loading /> : (
+      <>
+        <Reset />
+        <BrowserRouter>
+          <Routes>
+            <Route path={"/"} element={<LocationMain />} />
+            <Route path={"/signup"} element={<SignupMain />} />
+            <Route path={"/login"} element={ auth ? <Navigate to="/admin" /> : <LoginMain />} />
+            <Route path={"/admin"} element={ auth ? <AdminMain /> : <Navigate to="/login" />} />
+            <Route path={"/post"} element={ auth ? <PostMain /> : <Navigate to="/login" />} />
+            <Route path={"/archive"} element={ auth ? <ArchiveMain /> : <Navigate to="/login" />} />
+          </Routes>
+        </BrowserRouter>
+      </>
+    ) }
     </>
   );
 };
