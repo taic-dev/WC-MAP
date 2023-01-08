@@ -48,10 +48,12 @@ const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, image
       try{
         const res = await axios.post(url,data);
 
-        if(res.data.session.alert.success){
-          setAlert(res.data.session.alert.success);
+        if(res.data.success){
+          setAlert(res.data.success);
           setLoading(false);
+          return;
         }
+        
         setLoading(false);
         window.location.href="/archive";
       }catch (e){

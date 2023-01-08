@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { validation } from "./validation";
-import { localStorageObj } from "../../templates/common/localStrage";
 import axios from "axios";
 import { Box, TextField, Typography } from "@mui/material";
 import Alert from "@mui/material/Alert";
@@ -42,11 +41,9 @@ const LoginMain = () => {
         setLoading(false);
         return;
       }
-      // stateの更新
-      // 入力内容に間違いなかったら以下を処理する
-      dispatch({ type: "SUCCESS" });
-      localStorageObj.setLocalStorage();
       setLoading(false);
+      window.location.href="/admin"
+
     } catch (e) {
       setLoading(false);
       setError({ alert: "ログイン失敗" });
