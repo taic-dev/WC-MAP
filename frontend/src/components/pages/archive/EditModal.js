@@ -22,21 +22,22 @@ import CurrentLocationArea from "./CurrentLocationArea";
 import validation from "./validation";
 import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useLocation } from "react-router-dom";
 
 const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, images, setImages, setAlert }) => {
 
   const [loading,setLoading] = useState(false);
+  const location = useLocation();
   
   const {
     register,
     handleSubmit,
-    formState: { isValid, isDirty, errors },
+    formState: { errors },
   } = useForm({
     mode: 'onSubmit',
     criteriaMode: "all",
   });
   
-  console.log(errors);
   const url = "/api/update"
 
   const handleSubmitPostPage = async (data) => {
@@ -51,11 +52,13 @@ const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, image
         if(res.data.success){
           setAlert(res.data.success);
           setLoading(false);
+          location('/archive');
           return;
         }
         
         setLoading(false);
-        window.location.href="/archive";
+        location('/archive');
+        return;
       }catch (e){
         setLoading(false);
       }
@@ -73,8 +76,6 @@ const EditModal = ({ open, setOpen, toiletItemDetail, setToiletItemDetail, image
     }
     setToiletItemDetail({...toiletItemDetail, [e.target.name] : e.target.value});
   }
-
-  console.log(errors);
 
   return (
     <Modal

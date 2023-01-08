@@ -105,7 +105,7 @@ class ToiletController extends Controller
                 $toilet->updateToilet($request);
                 session()->flash('alert', ["success" => "登録が完了しました"]);
                 return response()->json([
-                    "success" => "登録が完了しました",
+                    "success" => "編集が完了しました",
                     "session" => session()->all()
                 ]);
                 exit;
