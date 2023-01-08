@@ -35,8 +35,6 @@ const AdminMain = () => {
     })();
   },[]);
 
-  console.log(toiletInfo);
-
   return (
     <>
       <Header page="admin">ホーム</Header>

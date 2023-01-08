@@ -102,6 +102,7 @@ class ToiletController extends Controller
             $toilet_image->deleteImages($request->toilet_id);
 
             if(empty($request->imageBase64)){
+                $toilet->updateToilet($request);
                 session()->flash('alert', ["success" => "登録が完了しました"]);
                 return response()->json([
                     "success" => "登録が完了しました",
@@ -112,7 +113,7 @@ class ToiletController extends Controller
 
             $image_array = UpdateImageClass::UpdateImage($request);
             $toilet->updateToilet($request);
-            $debug = $toilet_image->insert($request, $image_array);
+            $toilet_image->insert($request, $image_array);
             session()->flash('alert', ["success" => "編集が完了しました"]);
             return response()->json([
                 "success" => "編集が完了しました",
