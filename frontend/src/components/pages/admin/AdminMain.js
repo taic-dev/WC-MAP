@@ -1,5 +1,7 @@
 import {
   Avatar,
+  Box,
+  Button,
   Divider,
   List,
   ListItem,
@@ -9,7 +11,8 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faToilet } from "@fortawesome/free-solid-svg-icons";
-import WcIcon from '@mui/icons-material/Wc';
+import WcIcon from "@mui/icons-material/Wc";
+import LogoutIcon from "@mui/icons-material/Logout";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -19,21 +22,23 @@ import Header from "../common/Header";
 import AdminFooter from "../common/AdminFooter";
 
 const AdminMain = () => {
-  const [toiletInfo,setToiletInfo] = useState([]);
+  const [toiletInfo, setToiletInfo] = useState([]);
   const auth = useSelector((state) => state.auth);
   const url = "/api/admin";
 
-  useEffect(()=>{
-    (async ()=>{
-      try{
+  useEffect(() => {
+    (async () => {
+      try {
         const res = await axios.get(url);
         setToiletInfo(res.data.toilet_info);
         return;
-      }catch (e){
+      } catch (e) {
         return e;
       }
     })();
-  },[]);
+  }, []);
+
+  const handleClickLogoutButton = () => {};
 
   return (
     <>
@@ -51,13 +56,21 @@ const AdminMain = () => {
           <Divider variant="inset" component="li" />
           <ListItem>
             <ListItemAvatar>
-              <Avatar><WcIcon /></Avatar>
+              <Avatar>
+                <WcIcon />
+              </Avatar>
             </ListItemAvatar>
             <ListItemText
               primary={`投稿された全てのトイレ件数`}
               secondary={
                 <Typography
-                  sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end", fontFamily: "nicokaku" }}
+                  sx={{
+                    display: "block",
+                    fontSize: "30px",
+                    fontWeight: "bold",
+                    textAlign: "end",
+                    fontFamily: "nicokaku",
+                  }}
                   component="span"
                 >
                   {toiletInfo.all_toilet_num}件
@@ -68,13 +81,21 @@ const AdminMain = () => {
           <Divider variant="inset" component="li" />
           <ListItem>
             <ListItemAvatar>
-              <Avatar><FontAwesomeIcon style={{ width: "20px" }} icon={faToilet} /></Avatar>
+              <Avatar>
+                <FontAwesomeIcon style={{ width: "20px" }} icon={faToilet} />
+              </Avatar>
             </ListItemAvatar>
             <ListItemText
               primary={`あなたが投稿したトイレ件数`}
               secondary={
                 <Typography
-                  sx={{ display: "block", fontSize: "30px", fontWeight: "bold", textAlign: "end", fontFamily: "nicokaku" }}
+                  sx={{
+                    display: "block",
+                    fontSize: "30px",
+                    fontWeight: "bold",
+                    textAlign: "end",
+                    fontFamily: "nicokaku",
+                  }}
                   component="span"
                 >
                   {toiletInfo.my_post_toilet_num}件
@@ -84,6 +105,15 @@ const AdminMain = () => {
           </ListItem>
           <Divider variant="inset" component="li" />
         </List>
+        <Box sx={{ textAlign: "center", padding: "8vh 0" }}>
+          <Button
+            variant="contained"
+            endIcon={<LogoutIcon />}
+            onClick={handleClickLogoutButton}
+          >
+            Logout
+          </Button>
+        </Box>
       </main>
       <AdminFooter />
     </>
