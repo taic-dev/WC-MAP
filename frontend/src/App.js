@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 // components
 import LocationMain from "./components/pages/location/LocationMain";
 import LoginMain from "./components/pages/login/LoginMain";
+import RecentsMain from "./components/pages/recents/RecentsMain";
 import SignupMain from "./components/pages/signup/SignupMain";
 import AdminMain from "./components/pages/admin/AdminMain";
 import PostMain from "./components/pages/post/PostMain";
@@ -27,6 +28,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<LocationMain />} />
+          <Route path={"/recents"} element={<RecentsMain />} />
           <Route path={"/signup"} element={<SignupMain />} />
           <Route
             path={"/login"}
