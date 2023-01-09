@@ -210,6 +210,16 @@
     padding: 15px;
 }
 
+/* recents */
+.recents__header{
+    background-image: url(../public/img/page/recents-page.png);
+}
+
+.recents__main{
+    position: relative;
+    height: calc(100vh - 56px - 15vh);
+}
+
 /* admin */
 .admin__header{
     background-image: url(../public/img/page/admin-page.png);
