@@ -63,6 +63,25 @@
 
 /* info-window */
 
+.info-window__icon{
+    margin: 0 5px 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-window__icon li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    width: 25px;
+    height: 25px;
+    box-shadow: 1px 1px 6px #cccccc;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
 .info-window__review{
     display: flex;
     align-items: center;
