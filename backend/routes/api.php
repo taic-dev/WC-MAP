@@ -18,8 +18,11 @@ use App\Http\Controllers\ToiletController;
 
 Route::group(['middleware' => ['api','cors']], function(){
     Route::get('session-check',[AdminController::class, 'sessionCheck']);
+
     Route::post('signup',[AdminController::class, 'signUp']);
     Route::post('login',[AdminController::class, 'logIn']);
+    Route::get('logout',[AdminController::class, 'logOut']);
+
     Route::post('post',[ToiletController::class, 'addToilet']);
     Route::get('admin',[ToiletController::class, 'getToiletNum']);
     Route::get('all',[ToiletController::class, 'getAllToiletList']);
