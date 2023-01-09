@@ -32,6 +32,7 @@ class Toilet extends Model
     public function allToilet(){
         return Toilet::with('toiletImage')
         ->orderBy('id', 'desc')
+        ->whereNull('deleted_at')
         ->get();
     }
 
