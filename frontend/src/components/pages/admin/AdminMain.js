@@ -1,3 +1,11 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+import Header from "../common/Header";
+import AdminFooter from "../common/AdminFooter";
+
 import {
   Avatar,
   Box,
@@ -13,15 +21,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faToilet } from "@fortawesome/free-solid-svg-icons";
 import WcIcon from "@mui/icons-material/Wc";
 import LogoutIcon from "@mui/icons-material/Logout";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-// components
-import Header from "../common/Header";
-import AdminFooter from "../common/AdminFooter";
 
 const AdminMain = () => {
   const [toiletInfo, setToiletInfo] = useState([]);
@@ -57,7 +56,7 @@ const AdminMain = () => {
       }
 
       const url = '/api/logout';
-      
+
       (async ()=> {
         try{
           const res = await axios.get(url);
