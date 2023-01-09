@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { validation } from "./validation";
 import axios from "axios";
@@ -21,9 +20,6 @@ const LoginMain = () => {
     mode: "onChange",
     criteriaMode: "all",
   });
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const url = "/api/login";
 
