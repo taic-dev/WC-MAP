@@ -36,13 +36,16 @@ class Toilet extends Model
     }
 
     public function myToilet($admin_id){
-        return Toilet::all()->where('admin_id','=',$admin_id)->whereNull('deleted_at');
+        return Toilet::all()
+        ->where('admin_id','=',$admin_id)
+        ->whereNull('deleted_at');
     }
     
     public function myPostToilet($admin_id){
         return Toilet::with('toiletImage')
         ->orderBy('id', 'desc')
         ->where('admin_id',$admin_id)
+        ->whereNull('deleted_at')
         ->get();
     }
 
