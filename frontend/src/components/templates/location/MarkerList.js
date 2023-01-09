@@ -1,8 +1,12 @@
-import { Rating } from "@mui/material";
-import { InfoWindow, Marker } from "@react-google-maps/api";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { InfoWindow, Marker } from "@react-google-maps/api";
 import InfoArea from "../../pages/location/InfoArea";
+
+import AccessibleIcon from "@mui/icons-material/Accessible";
+import CurrencyYenIcon from "@mui/icons-material/CurrencyYen";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDroplet } from "@fortawesome/free-solid-svg-icons";
 
 const MarkerList = ({ setInfoArea }) => {
   const [activeMarker, setActiveMarker] = useState(false);
@@ -10,17 +14,16 @@ const MarkerList = ({ setInfoArea }) => {
 
   const url = "/api/all";
 
-  useEffect(()=>{
-    (async ()=>{
-      try{
+  useEffect(() => {
+    (async () => {
+      try {
         const res = await axios.get(url);
         setMarkerInfo(res.data);
-
-      }catch(e){
+      } catch (e) {
         return e;
       }
     })();
-  },[]);
+  }, []);
 
   const handleActiveMarker = (id) => {
     setActiveMarker(id);
@@ -44,17 +47,17 @@ const MarkerList = ({ setInfoArea }) => {
                 onCloseClick={() => setActiveMarker(false)}
               >
                 <div>
-                  <h1 style={{ fontSize: "18px" }} className="common__font-family">{marker.toilet_name}</h1>
-                  <div className="info-window__review">
-                    {/* <span>{marker.review}</span> */}
-                    {/* <Rating
-                      name="read-only"
-                      value={marker.review}
-                      size="small"
-                      readOnly
-                    />
-                    <span>(21)</span> */}
-                  </div>
+                  <h1
+                    style={{ fontSize: "18px" }}
+                    className="common__font-family"
+                  >
+                    {marker.toilet_name}
+                  </h1>
+                  <ul className="info-window__icon">
+                    { marker.price == "有料" && <li><CurrencyYenIcon style={{ width: "15px" }} /></li> }
+                    { marker.is_washlet == 1 && <li><FontAwesomeIcon icon={faDroplet} style={{ color : '#1E90FF' }} /></li> }
+                    { marker.is_multi_purpose_room == 1 && <li><AccessibleIcon style={{ color: '#008000', width: "20px" }} /></li> }
+                  </ul>
                 </div>
               </InfoWindow>
 
@@ -64,7 +67,7 @@ const MarkerList = ({ setInfoArea }) => {
               />
             </>
           ) : null}
-        </ React.Fragment>
+        </React.Fragment>
       ))}
     </>
   );
