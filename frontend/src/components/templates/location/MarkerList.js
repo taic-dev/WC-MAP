@@ -7,6 +7,7 @@ import IconList from "../../pages/common/IconList";
 const MarkerList = ({ setInfoArea }) => {
   const [activeMarker, setActiveMarker] = useState(false);
   const [markerInfo, setMarkerInfo] = useState([]);
+  const [recents, setRecents] = useState([]);
 
   const url = "/api/all";
 
@@ -25,6 +26,15 @@ const MarkerList = ({ setInfoArea }) => {
     setActiveMarker(id);
   };
 
+  const handleAddSessionStrage = (marker) => {
+    delete marker.admin_id;
+    delete marker.created_at;
+    delete marker.deleted_at;
+    delete marker.updated_at;
+    setRecents([...recents, marker]);
+    sessionStorage.setItem('recents', JSON.stringify([...recents, marker]));
+  }
+
   return (
     <>
       {markerInfo.map((marker) => (
@@ -32,7 +42,10 @@ const MarkerList = ({ setInfoArea }) => {
           <Marker
             key={`Marker-${marker.toilet_id}`}
             position={{ lat: marker.latitude, lng: marker.longitude }}
-            onClick={() => handleActiveMarker(marker.toilet_id)}
+            onClick={() => {
+              handleActiveMarker(marker.toilet_id);
+              handleAddSessionStrage(marker);
+            }}
           />
 
           {activeMarker === marker.toilet_id ? (
