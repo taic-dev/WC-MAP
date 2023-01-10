@@ -27,7 +27,6 @@ const InfoArea = ({
   handleActiveMarker
 }) => {
   const [descOpen, setDescOpen] = useState(false);
-  const [commentOpen, setCommentOpen] = useState(false);
   const GoogleMapURL = "https://www.google.com/maps/dir/?api=1&destination=";
 
   const descClick = () => setDescOpen(!descOpen);
