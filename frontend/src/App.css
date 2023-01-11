@@ -216,7 +216,7 @@
 
 .recents__main{
     position: relative;
-    height: calc(100vh - 56px - 15vh);
+    height: auto;
 }
 
 /* admin */
