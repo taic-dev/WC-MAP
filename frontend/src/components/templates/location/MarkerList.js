@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import InfoArea from "../../pages/location/InfoArea";
-
-import AccessibleIcon from "@mui/icons-material/Accessible";
-import CurrencyYenIcon from "@mui/icons-material/CurrencyYen";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDroplet } from "@fortawesome/free-solid-svg-icons";
+import IconList from "../../pages/common/IconList";
 
 const MarkerList = ({ setInfoArea }) => {
   const [activeMarker, setActiveMarker] = useState(false);
@@ -29,6 +25,19 @@ const MarkerList = ({ setInfoArea }) => {
     setActiveMarker(id);
   };
 
+  const handleAddSessionStrage = (marker = {}) => {
+    if(!sessionStorage.getItem('recents')){
+      sessionStorage.setItem('recents', JSON.stringify([]));
+    }
+
+    delete marker.admin_id;
+    delete marker.created_at;
+    delete marker.deleted_at;
+    delete marker.updated_at;
+    const recentsArray = JSON.parse(sessionStorage.getItem('recents'));
+    sessionStorage.setItem('recents', JSON.stringify([marker, ...recentsArray]));
+  }
+
   return (
     <>
       {markerInfo.map((marker) => (
@@ -36,7 +45,10 @@ const MarkerList = ({ setInfoArea }) => {
           <Marker
             key={`Marker-${marker.toilet_id}`}
             position={{ lat: marker.latitude, lng: marker.longitude }}
-            onClick={() => handleActiveMarker(marker.toilet_id)}
+            onClick={() => {
+              handleActiveMarker(marker.toilet_id);
+              handleAddSessionStrage(marker);
+            }}
           />
 
           {activeMarker === marker.toilet_id ? (
@@ -53,11 +65,7 @@ const MarkerList = ({ setInfoArea }) => {
                   >
                     {marker.toilet_name}
                   </h1>
-                  <ul className="info-window__icon">
-                    { marker.price == "有料" && <li><CurrencyYenIcon style={{ width: "15px" }} /></li> }
-                    { marker.is_washlet == 1 && <li><FontAwesomeIcon icon={faDroplet} style={{ color : '#1E90FF' }} /></li> }
-                    { marker.is_multi_purpose_room == 1 && <li><AccessibleIcon style={{ color: '#008000', width: "20px" }} /></li> }
-                  </ul>
+                  <IconList marker={marker} />
                 </div>
               </InfoWindow>
 
