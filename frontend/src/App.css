@@ -61,16 +61,14 @@
     height: 15vh;
 }
 
-/* info-window */
-
-.info-window__icon{
+.common__icon{
     margin: 0 5px 5px;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.info-window__icon li{
+.common__icon li{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -81,6 +79,7 @@
     border-radius: 50%;
     margin-top: 10px;
 }
+/* info-window */
 
 .info-window__review{
     display: flex;
@@ -208,6 +207,21 @@
 .info-area__detail li{
     border-bottom: solid 1px #cfcfcf;
     padding: 15px;
+}
+
+/* recents */
+.recents__header{
+    background-image: url(../public/img/page/recents-page.png);
+}
+
+.recents__main{
+    position: relative;
+    height: auto;
+}
+
+.recents__link{
+    color: "#000";
+    text-decoration: "none";
 }
 
 /* admin */
