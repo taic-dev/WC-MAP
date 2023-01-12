@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import InfoArea from "../../pages/location/InfoArea";
 import IconList from "../../pages/common/IconList";
+import getParams from "../common/getParams";
 
-const MarkerList = ({ setInfoArea }) => {
-  const [activeMarker, setActiveMarker] = useState(false);
+const MarkerList = () => {
+  const params = useLocation().search;
+  const [activeMarker, setActiveMarker] = useState(
+    params ? getParams(params, "toilet_id", "string") : false
+  );
   const [markerInfo, setMarkerInfo] = useState([]);
 
   const url = "/api/all";
@@ -26,17 +31,20 @@ const MarkerList = ({ setInfoArea }) => {
   };
 
   const handleAddSessionStrage = (marker = {}) => {
-    if(!sessionStorage.getItem('recents')){
-      sessionStorage.setItem('recents', JSON.stringify([]));
+    if (!sessionStorage.getItem("recents")) {
+      sessionStorage.setItem("recents", JSON.stringify([]));
     }
 
     delete marker.admin_id;
     delete marker.created_at;
     delete marker.deleted_at;
     delete marker.updated_at;
-    const recentsArray = JSON.parse(sessionStorage.getItem('recents'));
-    sessionStorage.setItem('recents', JSON.stringify([marker, ...recentsArray]));
-  }
+    const recentsArray = JSON.parse(sessionStorage.getItem("recents"));
+    sessionStorage.setItem(
+      "recents",
+      JSON.stringify([marker, ...recentsArray])
+    );
+  };
 
   return (
     <>
