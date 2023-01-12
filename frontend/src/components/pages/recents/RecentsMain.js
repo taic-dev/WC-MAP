@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import IconList from "../common/IconList";
@@ -33,12 +34,19 @@ const RecentsMain = () => {
           <Divider variant="inset" component="li" sx={{ margin: 0 }} />
           {recents.length == 0 ? (
             <>
-              <ListItem style={{ justifyContent: "center" }}>閲覧履歴はありません</ListItem>
+              <ListItem style={{ justifyContent: "center" }}>
+                閲覧履歴はありません
+              </ListItem>
               <Divider variant="inset" component="li" sx={{ margin: 0 }} />
             </>
           ) : (
             recents.map((recent) => (
-              <React.Fragment key={recent.toilet_id}>
+              <a
+                key={recent.toilet_id}
+                className="recents__link"
+                style={{ color: "#000", textDecoration: "none" }}
+                href={`${process.env.REACT_APP_URL}?lat=${recent.latitude}&lng=${recent.longitude}`}
+              >
                 <ListItem alignItems="flex-start" sx={{ alignItems: "center" }}>
                   <Box
                     style={{
@@ -86,7 +94,7 @@ const RecentsMain = () => {
                   </List>
                 </ListItem>
                 <Divider variant="inset" component="li" sx={{ margin: 0 }} />
-              </React.Fragment>
+              </a>
             ))
           )}
         </List>
