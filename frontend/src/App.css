@@ -219,6 +219,11 @@
     height: auto;
 }
 
+.recents__link{
+    color: "#000";
+    text-decoration: "none";
+}
+
 /* admin */
 .admin__header{
     background-image: url(../public/img/page/admin-page.png);
