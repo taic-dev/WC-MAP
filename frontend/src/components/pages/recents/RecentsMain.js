@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import IconList from "../common/IconList";
@@ -45,7 +44,7 @@ const RecentsMain = () => {
                 key={recent.toilet_id}
                 className="recents__link"
                 style={{ color: "#000", textDecoration: "none" }}
-                href={`${process.env.REACT_APP_URL}?lat=${recent.latitude}&lng=${recent.longitude}`}
+                href={`${process.env.REACT_APP_URL}?lat=${Number(recent.latitude)}&lng=${Number(recent.longitude)}&toilet_id=${recent.toilet_id}`}
               >
                 <ListItem alignItems="flex-start" sx={{ alignItems: "center" }}>
                   <Box

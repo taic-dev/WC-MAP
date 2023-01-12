@@ -10,6 +10,7 @@ import Footer from "../common/Footer";
 
 // function
 import getCurrentLocation from "../../templates/common/getCurrentLocation.js";
+import getParams from "../../templates/common/getParams";
 
 const LocationMain = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,26 +29,21 @@ const LocationMain = () => {
         setCurrentLocation(coordinate);
         setViewLocation(coordinate);
 
-        if(params){
-          const query = new URLSearchParams(params);
-          setViewLocation({ lat: Number(query.get('lat')), lng: Number(query.get('lng')) });
-        }
-
       } catch (e) {
         setCurrentLocation(e);
         setViewLocation(e);
+      }
 
-        if(params){
-          const query = new URLSearchParams(params);
-          setViewLocation({ lat: Number(query.get('lat')), lng: Number(query.get('lng')) });
-        }
-
+      if (params) {
+        setViewLocation({
+          lat: getParams(params, 'lat', "number"),
+          lng: getParams(params, 'lng', "number"),
+        });
       }
       setIsLoading(false);
     })();
   }, []);
 
-  console.log(viewLocation);
   return (
     <>
       <main className="main">
