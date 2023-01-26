@@ -31,7 +31,6 @@ const ArchiveMain = () => {
     (async ()=>{
       try{
         const res = await axios.get(url);
-        console.log(res.data)
         setToiletList(res.data.toiletInfo);
         if(res.data.session.alert.success){
           setAlert(res.data.session.alert.success);
@@ -99,8 +98,6 @@ const ArchiveMain = () => {
     setOpen(true);
     setTimeout(()=>{document.getElementById("toilet_name").focus();},1)
   }
-
-  console.log(toiletList);
 
   return (
     <>

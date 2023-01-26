@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function sessionCheck(Request $request)
+    {
+        return $request->session()->has('admin_id');
+    }
+
     public function signUp(Request $request)
     {
         try{
@@ -63,6 +68,14 @@ class AdminController extends Controller
 
         }catch(\Exception $e){
             return ["error" => "情報が正しくありません"];
+        }
+    }
+
+    public function logOut(Request $request)
+    {
+        $request->session()->flush();
+        if(!$request->session()->has('admin_id')){
+            return response()->json(["success" => "Logoutが完了しました"]);
         }
     }
 }

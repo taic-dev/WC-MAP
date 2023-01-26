@@ -20,13 +20,14 @@ import validation from "./validation";
 import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { createUuid } from "../../templates/common/createUuid";
+import { useNavigate } from "react-router-dom";
 
 function PostMain() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ alert: false });
   const [images, setImages] = useState([]);
-
   const uuid = createUuid();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -52,7 +53,7 @@ function PostMain() {
         return;
       }
 
-      window.location.href="/archive";
+      navigate('/archive');
       setLoading(false);
     }catch (e){
       setLoading(false);
