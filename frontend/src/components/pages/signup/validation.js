@@ -1,6 +1,12 @@
 export const validation = ( getValues ) => {
 
   const validationSignup = {
+    name: {
+      required: {
+        value: true,
+        message: "入力が必須です",
+      }
+    },
     email: {
       required: {
         value: true,
@@ -18,7 +24,7 @@ export const validation = ( getValues ) => {
       },
       minLength: {
         value: 8,
-        message: "8文字以上入力してください",
+        message: "8文字以上で入力してください",
       },
     },
     confirmation: {

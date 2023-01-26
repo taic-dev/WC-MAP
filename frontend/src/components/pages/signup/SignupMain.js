@@ -7,10 +7,15 @@ import { Box, TextField, Typography } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
+import { createUuid } from "../../templates/common/createUuid";
 
 const SignupMain = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({ alert: false });
+  const [alert, setAlert] = useState({ error: false, success: false });
+
+  console.log(validation());
+
+  const uuid = createUuid();
 
   const {
     register,
@@ -22,17 +27,29 @@ const SignupMain = () => {
     criteriaMode: "all",
   });
 
-  const signupURL = "";
+  const url = "/api/signup";
 
   const handleSubmitPostSignup = async (data) => {
+    data.admin_id = uuid;
     console.log(data);
     setLoading(true);
+
     try {
-      const res = await axios.post(signupURL, data);
+      const res = await axios.post(url, data);
+      console.log(res);
+
+      if(res.data.error){
+        setAlert({ ...alert, error: res.data.error, success: false })
+        setLoading(false);
+        return;
+      }
+
+      setAlert({ ...alert, error: false, success: res.data.success });
       setLoading(false);
+      return;
     } catch (e) {
       setLoading(false);
-      setError({ alert: "新規登録 失敗" });
+      setAlert({ ...alert, error: "サインアップ失敗", success: false });
       console.error("送信失敗");
     }
   };
@@ -52,18 +69,26 @@ const SignupMain = () => {
         }}
         onSubmit={handleSubmit(handleSubmitPostSignup)}
       >
-        {error.alert && (
-          <Alert
-            severity="error"
-            sx={{ position: "absolute", top: "50px", width: "85%" }}
-          >
-            {error.alert}
-          </Alert>
-        )}
+        {alert.error && <Alert severity="error" sx={{ position: "absolute", top: "50px", width: "85%" }} > { alert.error } </Alert> }
+        {alert.success && <Alert severity="success" sx={{ position: "absolute", top: "50px", width: "85%" }} > { alert.success } </Alert> }
 
-        <Typography variant={"h5"} sx={{ mb: "30px" }}>
+        <Typography variant={"h5"} sx={{ mb: "30px", fontFamily: "nicokaku" }}>
           Sign Up
         </Typography>
+        <TextField
+          id="standard-required"
+          type="text"
+          name="name"
+          label="ユーザーネーム"
+          variant="standard"
+          sx={{ width: "70%", marginBottom: "50px" }}
+          helperText={
+            (errors.name?.types.required && errors.name.message) ||
+            (errors.name?.types.pattern && errors.name.message)
+          }
+          error={errors.name && true}
+          {...register("name", validation().name)}
+        />
         <TextField
           id="standard-required"
           type="email"

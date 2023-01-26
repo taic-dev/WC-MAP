@@ -1,204 +1,89 @@
-import { Rating } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import React, { useState } from "react";
 import InfoArea from "../../pages/location/InfoArea";
+import IconList from "../../pages/common/IconList";
+import getParams from "../common/getParams";
 
-const MarkerList = ({ setInfoArea }) => {
-  const [activeMarker, setActiveMarker] = useState(false);
+const MarkerList = () => {
+  const params = useLocation().search;
+  const [activeMarker, setActiveMarker] = useState(
+    params ? getParams(params, "toilet_id", "string") : false
+  );
+  const [markerInfo, setMarkerInfo] = useState([]);
 
-  const getMarkerInfo = [
-    {
-      id: 1,
-      name: "トイレ1",
-      review: 4,
-      location: {
-        lat: 35.69731,
-        lng: 139.7747,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "無料",
-          clean: "非常に綺麗",
-          time: "10:00~22:00",
-          num: "2",
-          type: "洋式",
-          water: "あり",
-          babyChangingStation: "あり",
-          multipurpose: "あり",
-          desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "トイレ2",
-      review: 4,
-      location: {
-        lat: 35.69575,
-        lng: 139.77521,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "無料",
-          clean: "非常に綺麗",
-          time: "10:00~22:00",
-          num: "2",
-          type: "洋式",
-          water: "あり",
-          babyChangingStation: "あり",
-          multipurpose: "あり",
-          desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3トイレ3",
-      review: 3,
-      location: {
-        lat: 33.8315492,
-        lng: 132.754934,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "無料",
-          clean: "非常に綺麗",
-          time: "10:00~22:00",
-          num: "2",
-          type: "和式",
-          water: "あり",
-          babyChangingStation: "あり",
-          multipurpose: "あり",
-          desc: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト",
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "スターバックスコーヒー 松山市駅前店",
-      review: 5,
-      location: {
-        lat: 33.8356102,
-        lng: 132.7640894,
-      },
-      images: [
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-        {
-          src: "https://myportfoliomain43061.gatsbyjs.io/static/demo-f39ac88109925949b929d6d8327a4632.png",
-        },
-      ],
-      detail: [
-        {
-          price: "有料",
-          clean: "非常に綺麗",
-          time: "10:00~21:00",
-          num: "1",
-          type: "洋式",
-          water: "あり",
-          babyChangingStation: "なし",
-          multipurpose: "なし",
-          desc: "さすがのスターバックス！！いつも清潔に保たれています。",
-        },
-      ],
-    },
-  ];
+  const url = "/api/all";
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(url);
+        setMarkerInfo(res.data);
+      } catch (e) {
+        return e;
+      }
+    })();
+  }, []);
 
   const handleActiveMarker = (id) => {
     setActiveMarker(id);
   };
 
+  const handleAddSessionStrage = (marker = {}) => {
+    if (!sessionStorage.getItem("recents")) {
+      sessionStorage.setItem("recents", JSON.stringify([]));
+    }
+
+    delete marker.admin_id;
+    delete marker.created_at;
+    delete marker.deleted_at;
+    delete marker.updated_at;
+    const recentsArray = JSON.parse(sessionStorage.getItem("recents"));
+    sessionStorage.setItem(
+      "recents",
+      JSON.stringify([marker, ...recentsArray])
+    );
+  };
+
   return (
     <>
-      {getMarkerInfo.map((getMarker) => (
-        <>
+      {markerInfo.map((marker) => (
+        <React.Fragment key={marker.toilet_id}>
           <Marker
-            key={getMarker.name}
-            position={getMarker.location}
-            onClick={() => handleActiveMarker(getMarker.id)}
+            key={`Marker-${marker.toilet_id}`}
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            onClick={() => {
+              handleActiveMarker(marker.toilet_id);
+              handleAddSessionStrage(marker);
+            }}
           />
 
-          {activeMarker === getMarker.id ? (
+          {activeMarker === marker.toilet_id ? (
             <>
               <InfoWindow
-                position={getMarker.location}
+                key={`InfoWindow-${marker.toilet_id}`}
+                position={{ lat: marker.latitude, lng: marker.longitude }}
                 onCloseClick={() => setActiveMarker(false)}
               >
                 <div>
-                  <h1>{getMarker.name}</h1>
-                  <div className="info-window__review">
-                    <span>{getMarker.review}</span>
-                    <Rating
-                      name="read-only"
-                      value={getMarker.review}
-                      size="small"
-                      readOnly
-                    />
-                    <span>(21)</span>
-                  </div>
+                  <h1
+                    style={{ fontSize: "18px" }}
+                    className="common__font-family"
+                  >
+                    {marker.toilet_name}
+                  </h1>
+                  <IconList marker={marker} />
                 </div>
               </InfoWindow>
 
               <InfoArea
-                name={getMarker.name}
-                review={getMarker.review}
-                location={getMarker.location}
-                images={getMarker.images}
-                detail={getMarker.detail}
+                marker={marker}
                 handleActiveMarker={handleActiveMarker}
               />
             </>
           ) : null}
-        </>
+        </React.Fragment>
       ))}
     </>
   );
