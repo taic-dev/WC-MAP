@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { validation } from "./validation";
-import { localStorageObj } from "../../templates/common/localStrage";
 import axios from "axios";
 import { Box, TextField, Typography } from "@mui/material";
 import Alert from "@mui/material/Alert";
@@ -22,9 +20,6 @@ const LoginMain = () => {
     mode: "onChange",
     criteriaMode: "all",
   });
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const url = "/api/login";
 
@@ -34,24 +29,17 @@ const LoginMain = () => {
 
     // 情報の受け渡し
     try {
-      axios.get("/sanctum/csrf-cookie",{ withCredentials: true }).then((response) => {
-        (async ()=>{
-          const res = await axios.post(url, data);
-          console.log(res);
-    
-          if(res.data.error){
-            setError({ alert: res.data.error })
-            setLoading(false);
-            return;
-          }
-          // stateの更新
-          // 入力内容に間違いなかったら以下を処理する
-          dispatch({ type: "SUCCESS" });
-          localStorageObj.setLocalStorage();
-          setLoading(false);
-          // window.location.href="/admin"
-        })();
-      });
+      const res = await axios.post(url, data);
+      console.log(res);
+
+      if(res.data.error){
+        setError({ alert: res.data.error })
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+      window.location.href="/admin"
+
     } catch (e) {
       setLoading(false);
       setError({ alert: "ログイン失敗" });

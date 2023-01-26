@@ -6,7 +6,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Rating,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Resizable } from "re-resizable";
@@ -18,23 +17,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CurrencyYenIcon from "@mui/icons-material/CurrencyYen";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
-import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
 
 const InfoArea = ({
   marker,
   handleActiveMarker
 }) => {
   const [descOpen, setDescOpen] = useState(false);
-  const [commentOpen, setCommentOpen] = useState(false);
   const GoogleMapURL = "https://www.google.com/maps/dir/?api=1&destination=";
 
   const descClick = () => setDescOpen(!descOpen);
-  const commentClick = () => setCommentOpen(!commentOpen);
 
   return (    
     <div className="info-area__wrapper">
@@ -54,11 +49,6 @@ const InfoArea = ({
           <div className="info-area__title">
             <h1 className="common__font-family">{marker.toilet_name}</h1>
           </div>
-          {/* <div className="info-area__review">
-            <span>{review}</span>
-            <Rating name="read-only" value={review} size="small" readOnly />
-            <span>(21)</span>
-          </div> */}
           <ul className="info-area__link">
             <li>
               <a href={GoogleMapURL + `${ marker.latitude },${ marker.longitude }`} target="_blank" rel="noopener noreferrer">
@@ -140,20 +130,6 @@ const InfoArea = ({
                 <ListItemText primary={ marker.description } />
               </List>
             </Collapse>
-
-            {/* <ListItemButton onClick={commentClick}>
-              <ListItemIcon>
-                <SpeakerNotesIcon />
-              </ListItemIcon>
-              <ListItemText primary="コメント" />
-              {commentOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={commentOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemText primary={detail[0].desc} />
-              </List>
-            </Collapse> */}
-
           </div>
         </div>
       </Resizable>
