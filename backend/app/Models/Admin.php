@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use DB;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     public function mail_check($request){
         return DB::table('admins')->where('email',$request->email)->exists();

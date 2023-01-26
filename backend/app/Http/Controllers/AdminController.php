@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -53,9 +53,18 @@ class AdminController extends Controller
                 return ["error" => "情報が正しくありません"];
             }
 
-            session(['admin_id' => $admin_array->admin_id]);
+            $credentials = $request->validate([
+                'email' => ['required', 'email'],
+                'password' => ['required'],
+            ]);
+            
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+                session(['admin_id' => $admin_array->admin_id]);
+                return response()->json(Auth::user());
+            }
 
-            return response()->json($admin_array);
+            return response()->json([], 401);
 
         }catch(\Exception $e){
             return ["error" => "情報が正しくありません"];
