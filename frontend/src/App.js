@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { Reset } from "styled-reset";
-import { useSelector } from "react-redux";
 
 // react-router-dom
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -9,12 +8,19 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 // components
 import LocationMain from "./components/pages/location/LocationMain";
 import LoginMain from "./components/pages/login/LoginMain";
+import RecentsMain from "./components/pages/recents/RecentsMain";
 import SignupMain from "./components/pages/signup/SignupMain";
 import AdminMain from "./components/pages/admin/AdminMain";
+import PostMain from "./components/pages/post/PostMain";
+import ArchiveMain from "./components/pages/archive/ArchiveMain";
+import { useAuth } from "./components/hooks/useAuth";
+import Loading from "./components/pages/location/Loading";
 
 const App = () => {
-  // state取得
-  const auth = useSelector((state) => state.auth);
+  const auth = useAuth();
+
+  // ログイン状態にあるか確認できるまでは何もしない。
+  if (auth === false) return;
 
   return (
     <>
@@ -22,14 +28,23 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<LocationMain />} />
+          <Route path={"/recents"} element={<RecentsMain />} />
           <Route path={"/signup"} element={<SignupMain />} />
           <Route
             path={"/login"}
-            element={ auth ? <Navigate to="/admin" /> : <LoginMain />}
+            element={auth ? <Navigate to="/admin" /> : <LoginMain />}
           />
           <Route
             path={"/admin"}
             element={auth ? <AdminMain /> : <Navigate to="/login" />}
+          />
+          <Route
+            path={"/post"}
+            element={auth ? <PostMain /> : <Navigate to="/login" />}
+          />
+          <Route
+            path={"/archive"}
+            element={auth ? <ArchiveMain /> : <Navigate to="/login" />}
           />
         </Routes>
       </BrowserRouter>

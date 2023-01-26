@@ -1,4 +1,5 @@
 {
+  "proxy": "http://localhost:8000",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -12,14 +13,17 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@mui/icons-material": "^5.10.9",
+    "@mui/joy": "^5.0.0-alpha.56",
     "@mui/lab": "^5.0.0-alpha.109",
     "@mui/material": "^5.10.12",
+    "@mui/x-date-pickers": "^5.0.9",
     "@react-google-maps/api": "^2.13.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.0",
+    "dotenv-webpack": "^8.0.1",
     "google-map-react": "^2.2.0",
     "re-resizable": "^6.9.9",
     "react": "^18.2.0",
@@ -31,6 +35,9 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "styled-reset": "^4.4.2",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.6.15",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
