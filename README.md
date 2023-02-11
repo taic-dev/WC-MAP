@@ -5,6 +5,15 @@
 # W.C. MAP 〜トイレ検索アプリ〜
 
 ## Demo
+### 一般ユーザー機能
+<div align="center">
+<video controls src="https://user-images.githubusercontent.com/52269577/218248944-35ce3b21-e6b3-469e-b261-f5f54ff166da.mov"></video>
+</div>
+
+### 管理者ユーザー機能
+<div align="center">
+<video controls src="https://user-images.githubusercontent.com/52269577/218248944-35ce3b21-e6b3-469e-b261-f5f54ff166da.mov"></video>
+</div>
 
 ## Description
 WEB上で全国のトイレを探せるWEBアプリケーションです。<br>
